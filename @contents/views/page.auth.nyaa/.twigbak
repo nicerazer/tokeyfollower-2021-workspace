@@ -1,0 +1,102 @@
+<section id="home--header" class="d-flex align-items-center justify-content-center">
+
+  <div id="home--header--content" class="text-center">
+
+    <div class="text-white">
+      <h1><span>Tokey</span><span>Follower</span></h1>
+      <h3 class="lead">Pengalaman menggunakan servis follower yang terbaik anda akan alami!</h3>
+      <h2 class="lead">MALAYSIA FOLLOWER 100% DISINI</h3>
+    </div>
+
+    <form id="home--header--form" {% if site['rtl'] %}class="rtl-form"{% endif %} method="post" action="/signin">
+
+      {# Widgets: Info bar #}
+      {% if error %}
+      <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ errorMessage }}
+      </div>
+      {% endif %}
+
+      {% if success %}
+      <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{successMessage}}
+      </div>
+      {% endif %}
+      {# End widgets #}
+
+      <div class="form-group">
+        <label for="username" class="text-white control-label">{{ lang('signup.username') }}</label>
+        <input type="text" class="form-control" id="username" name="LoginForm[username]">
+      </div>
+      <div class="form-group form-group__password">
+        <label for="password" class="text-white control-label">{{lang('signup.password')}}</label>
+        <input type="password" class="form-control" id="password" name="LoginForm[password]">
+      </div>
+
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"  name="LoginForm[remember]" value="1" id="remember">{{lang('signin.remember_me')}}
+        </label>
+      </div>
+
+      <a href="/resetpassword">Terlupa kata laluan?</a>
+
+      {% if captcha %}
+      <div class="g-recaptcha form-group" data-sitekey="{{captchaKey}}"></div>
+      {% endif %}
+
+      <input type="hidden" name="_csrf" value="{{csrftoken}}">
+      <button type="submit" class="btn btn-default btn-block">Log masuk</button>
+
+    </form>
+
+    <div id="home--header--register" class="mb-3">
+      <p>atau</p>
+      <a href="/signup" class="btn btn-default btn-block">Daftar sekarang</a>
+    </div>
+
+    <div id="home--header--social--instagram" class="d-flex justify-content-center">
+      <a
+         style="
+                padding:10px;
+                background:linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+                color: white;
+                border-radius: 15px;
+                text-decoration: inherit;
+                font-family: 'Libre Caslon Text', serif;
+                "
+         href="https://instagram.com/belajar_berniaga_follower?igshid=ny2ktuy5ujhe"
+         >
+        <i class="fa fa-instagram" aria-hidden="true"></i>
+        Sertai kami di instagram!
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div id="home--header--overlay"></div>
+  <div id="home--header--background" style="
+  	background: url(https://murai.my/wp-content/uploads/2019/05/GLYCO-LEAP.jpeg) 50% no-repeat !important;
+  	background-size: cover !important;
+  "></div>
+          
+</section>
+
+{#
+  { if authText %}
+#}
+
+<article id="article--home--content">
+  {{ authText }}
+</article>
+
+{#
+  {% endif %}
+  #}
+
+{% if site['captcha'] %}
+  <script src='https://www.google.com/recaptcha/api.js?hl={{ site['language'] }}'></script>
+{% endif %}

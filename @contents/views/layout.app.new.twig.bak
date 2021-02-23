@@ -7,7 +7,6 @@
   <title>{{ page['title'] }}</title>
   <meta name="keywords" content="{{ site['seo_key'] }}">
   <meta name="description" content="{{ site['seo_desc'] }}">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   {# Commons: Header-Icon #}
   {% if site['favicon'] %}
@@ -25,6 +24,7 @@
 <body>
 
 {# Layout: Public #}
+{#
 {% if not user['auth'] %}
 <main id="tf-public">
   <div class="tf-common--pagecontent">
@@ -32,8 +32,10 @@
   </div>
 </main>
 {% endif %}
+#}
 
 {# Layout: Admin #}
+{% if user['auth'] %}
 <main id="tf-admin">
   <nav id="tf-admin--sidebar">
 
@@ -168,6 +170,7 @@
 
 
   {# Commons: Footer-Auto====Scripts #}
+  {#
   {% for script in site['scripts'] %}
   <script
     type="text/javascript"
@@ -178,6 +181,7 @@
     {% if script['code'] %} {{ script['code'] }} {% endif %}
   </script>
   {% endfor %}
+  #}
 
   <!-- Beamer configuration -->
   <script type="text/javascript" src="https://app.getbeamer.com/js/beamer-embed.js" defer="defer"></script>

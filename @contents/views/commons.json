@@ -1,3 +1,31 @@
 {
-  "commonVar": "Wow I'm from the commons json!"
+  "site": {
+    "language": "eng",
+    "seo_key": "",
+    "seo_desc": "",
+    "favicon": "#",
+    "custom_header": "",
+    "logo": "#",
+    "name": "TokeyFollower",
+    "menu": [
+      {"active": true, "link": "#", "name":"Default"}
+    ],
+    "active_menu": "account",
+    "counterOrdersAll": 15,
+    "styles": [
+      { "href": "app.min.css" }
+    ],
+    "scripts": [
+      {"src": "jquery.min.js"},
+      {"src": "bootstrap.min.js"},
+      {"src": "app.min.js"},
+      {"code": "var varFromCommonsJson"}
+    ]
+  },
+  "user": {
+    "auth": true,
+    "balance": 20,
+    "username": "IqbalZZ"
+  },
+  "page": "title"
 }

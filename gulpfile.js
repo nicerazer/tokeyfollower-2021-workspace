@@ -4,94 +4,125 @@ var log = require('fancy-log');
 const gulp = require('gulp');
 
 const less         = require('gulp-less'),
+      sass         = require('gulp-sass'),
       cleanCss     = require('gulp-clean-css'),
       minifyJs     = require('gulp-babel-minify'),
       autoprefixer = require('gulp-autoprefixer'),
       twig         = require('gulp-twig'),
-      frep         = require('gulp-frep'),
       rename       = require('gulp-rename'),
       bootlint     = require('gulp-bootlint'),
       cleanFiles   = require('gulp-clean'),
-      htmlToJson   = require('gulp-html-to-json'),
+      replace      = require('gulp-replace'),
+      prettyHtml   = require('gulp-pretty-html'),
       browserSync  = require('browser-sync').create(),
       fs           = require('fs');
 
+function _replaceAndCapitalizeDotsSeparator(str) {
+  return str.split('.').map((substr, i) => i === 0 ? substr : substr.charAt(0).toUpperCase() + substr.substring(1) ).join('');
+}
+
 function _discoverPages() {
   var directoryStructure = fs.readdirSync('./@contents/views');
-  var filteredDirectoryStructures =
-    directoryStructure.filter((item) => item.includes('page'))
-                      .map((item) => item.replace('page.', ''));
+  var filteredDirectoryStructures = directoryStructure
+    .filter((item) => item.includes('page'))
+    .map(item => item.replace('page.', ''));
   log('Discovered', '\x1b[32m', filteredDirectoryStructures);
-  return filteredDirectoryStructures;
+  return new Promise((resolve) => {
+    resolve(filteredDirectoryStructures);
+  });
 }
 
-function _cacheHtmlToJson() {
-  var pageName = 'sample';
-  // Cache tpl file
-  fs.writeFileSync(`./@contents/_cache/page.${pageName}.tpl`, `//=${pageName}Text : ../views/page.${pageName}/.html`);
-
+/**
+ * @param  {String} sourceTwigPath
+ * @param  {String} replaceTargetText
+ * @param  {String} replaceSubjectPath
+ * @param  {Object} renameDetailsObject
+ */
+function __embedTwig(sourceTwigPath, replaceTargetText, replaceSubjectPath, renameDetailsObject) {
+  const parsedJsonPageHtml = fs.readFileSync(replaceSubjectPath).toString();
   return new Promise((resolve, reject) => {
-    gulp.src(`./@contents/_cache/page.${pageName}.tpl`)
-    .pipe(htmlToJson())
-    .pipe(rename({ basename: pageName, prefix: 'page.' , extname: '.json' }))
+  gulp.src(sourceTwigPath)
+    .pipe(replace(replaceTargetText, parsedJsonPageHtml))
+    .pipe(rename(renameDetailsObject))
     .pipe(gulp.dest('./@contents/_cache'))
     .on('finish', () => { resolve(); })
     .on('error', () => { reject(); });
   });
 }
 
-function _cacheTwigWrapping(pageName) {
-  // Wrap .twig from the specific page folder into the @pageContent in the 'wrapper'
+/**
+ * @param  {String} sourceTwigPath
+ * @param  {String} destinationPath
+ * @param  {Object} twigDetailsObject
+ * @param  {Object} renameDetailsObject
+ */
+function __parseTwig(sourceTwigPath, destinationPath, twigDetailsObject, renameDetailsObject) {
   return new Promise((resolve, reject) => {
-    gulp.src('./@contents/views/wrapper.twig')
-    .pipe(frep([{
-      pattern: /@pageContent/, replacement: fs.readFileSync(`./@contents/views/page.${pageName}/.twig`)
-    }]))
-    .pipe(rename({ basename: pageName, prefix: 'page.' , extname: '.wrapped.twig' }))
-    .pipe(gulp.dest('./@contents/_cache'))
+    gulp.src(sourceTwigPath)
+    .pipe(twig(twigDetailsObject))
+    .pipe(prettyHtml())
+    .pipe(rename(renameDetailsObject))
+    .pipe(gulp.dest(destinationPath))
     .on('finish', () => { resolve(); })
     .on('error', () => { reject(); });
   });
 }
 
-function _compileTwig(pageName) {
-  const parsedJsonAppLayout = JSON.parse(fs.readFileSync(`./@contents/views/commons.json`));
-  const parsedJsonPageHtml = JSON.parse(fs.readFileSync(`./@contents/_cache/page.${pageName}.json`));
-  const parsedJsonPageData = JSON.parse(fs.readFileSync(`./@contents/views/page.${pageName}/.json`));
+function _innerTwigify(pageName) {
+  const parsedJsonData = JSON.parse(fs.readFileSync(`./@contents/views/page.${pageName}/.json`));
+  return __embedTwig(
+    `./@contents/views/page.${pageName}/.twig`,
+    `{{ ${_replaceAndCapitalizeDotsSeparator(pageName)}Text }}`,
+    `./@contents/views/page.${pageName}/.html`,
+    { basename: pageName, prefix: 'page.', suffix: '.inner.embedded', extname: '.twig' }
+  ).then(() => { return __parseTwig(
+    `./@contents/_cache/page.${pageName}.inner.embedded.twig`,
+    './@contents/_cache',
+    { data: parsedJsonData },
+    { basename: pageName, prefix: 'page.', suffix: '.inner.twigged', extname: '.html' }
+  ); });
+}
 
-  const mergedJson = Object.assign(parsedJsonAppLayout, parsedJsonPageHtml, parsedJsonPageData);
-  return new Promise((resolve, reject) => {
-    gulp.src(`./@contents/_cache/page.${pageName}.wrapped.twig`)
-    .pipe(twig({ data: mergedJson }))
-    .pipe(rename({ basename: pageName, extname: '.html' }))
-    .pipe(gulp.dest('./@contents/@exported_html'))
-    .on('finish', () => { resolve(); })
-    .on('error', () => { reject(); });
-  });
+function _outerTwigify(pageName) {
+  const { twigFunctions } = require('./@contents/twigFunctions');
+  const parsedJsonData = JSON.parse(fs.readFileSync(`./@contents/views/commons.json`));
+
+  return __embedTwig(
+    './@contents/views/layout.app.twig',
+    '{{ content }}',
+    `./@contents/_cache/page.${pageName}.inner.twigged.html`,
+    { basename: pageName, prefix: 'page.', suffix: '.outer.embedded', extname: '.twig' }
+  ).then(() => { return __parseTwig(
+    `./@contents/_cache/page.${pageName}.outer.embedded.twig`,
+    './@contents/@exported_html',
+    { data: parsedJsonData, functions: twigFunctions },
+    { basename: pageName, extname: '.html' }
+  ); });
 }
 
 async function compileAllPages(cb) {
   browserSync.notify("Compiling, please wait!", 3000);
-  let pageNames = _discoverPages();
-  for (const pageName of pageNames) {
-    log(`Cache - Wrapping: \x1b[33m${pageName}`);
-    await _cacheTwigWrapping(pageName)
-    .then(() => {
-      log(`Cache - Html to Json: \x1b[33m${pageName}`);
-      return _cacheHtmlToJson(pageName);
-    })
-    .then(() => {
-      log(`Compiling: \x1b[33m${pageName}`);
-      _compileTwig(pageName);
-    })
+  try {
+    await _discoverPages().then(async pageNames => {
+      for (const pageName of pageNames) {
+        log(`Compiling Inner Twig: \x1b[33m${pageName}`);
+        await _innerTwigify(pageName)
+        .then(() => {
+          log(`Compiling Outer Twig: \x1b[33m${pageName}`);
+          return _outerTwigify(pageName);
+        });
+      }
+    });
+    log(`\x1b[33mCompilation completed`);
+    cb();
+  } catch (error) {
+    cb(error);
   }
-  log(`\x1b[33mCompilation completed`);
-  cb();
 }
 
 function compileCss() {
-  return gulp.src('./@contents/less/app.less')
-    .pipe(less())
+  return gulp.src('./@contents/sass/app.scss')
+    .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer())
     .pipe(cleanCss())
     .pipe(rename({ basename: 'app', extname: '.min.css' }))
@@ -124,6 +155,19 @@ function cleanCache(dirs) {
   .pipe(cleanFiles());
 }
 
+exports.innerT = () => {
+  return _innerTwigify('auth.nyaa');
+}
+
+exports.nyaIfy = () => {
+  return gulp.src('./@experiments/text.twig')
+  .pipe(replace("foo", "what you are doing bro"))
+  .pipe(twig())
+  .pipe(gulp.dest('./@experiments'));
+}
+
+exports.discoverPages = _discoverPages;
+
 exports.default = () => {
   cleanCache([
     './@contents/_cache/*',
@@ -137,14 +181,14 @@ exports.default = () => {
     gulp.series(() => { return cleanCache(['./@contents/_cache/*','./@contents/@exported_html/*']) }, compileAllPages, verifyMarkup)
   );
   gulp.watch('./@contents/js', { ignoreInitial: false }, gulp.series(() => { return cleanCache('./@contents/@exported_js/*.js') }, compileJs, fetchVendorJs));
-  gulp.watch('./@contents/less', { ignoreInitial: false }, gulp.series(() => { return cleanCache('./@contents/@exported_css/*.css') }, compileCss));
+  gulp.watch('./@contents/sass', { ignoreInitial: false }, gulp.series(() => { return cleanCache('./@contents/@exported_css/*.css') }, compileCss));
 
   // Full Reload
   browserSync.watch(['./@contents/@exported_html/*.html', './@contents/@exported_js/*.js']).on('change', browserSync.reload);
 
   browserSync.init({
     server: {
-      baseDir : ["./@contents/@exported_html", "./@contents/@exported_css", "./@contents/@exported_js"],
+      baseDir : ["./@contents/@exported_html", "./@contents/@exported_css", "./@contents/@exported_js", "./@contents/img"],
     },
     directory: true,
     open: false
