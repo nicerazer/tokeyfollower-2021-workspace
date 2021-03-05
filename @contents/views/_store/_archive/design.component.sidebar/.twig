@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="well">
+        <form {% if site['rtl'] %}class="rtl-form"{% endif %} method="post" action="{{ page['url'] }}">
+          {% if error %}
+            <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {{ errorMessage }}
+            </div>
+          {% endif %}
+
+          {% if success %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{successMessage}}
+            </div>
+          {% endif %}
+
+          <div class="form-group">
+            <label for="username" class="control-label">{{ lang('signup.username') }}</label>
+            <input type="text" class="form-control" id="username" name="LoginForm[username]">
+          </div>
+          <div class="form-group form-group__password">
+            <label for="password" class="control-label">{{lang('signup.password')}}</label>
+            <input type="password" class="form-control" id="password" name="LoginForm[password]">
+              {% if site['resetPassword'] %}
+                <a href="{{ page_url('resetpassword') }}" class="forgot-password">{{ lang('signin.reset_password') }}</a>
+              {% endif %}
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox"  name="LoginForm[remember]" value="1" id="remember">{{lang('signin.remember_me')}}
+            </label>
+          </div>
+
+          {% if captcha %}
+            {{ captchaCode }}
+          {% endif %}
+
+          <input type="hidden" name="_csrf" value="{{csrftoken}}">
+          <button type="submit" class="btn btn-primary">{{ lang('signin.button') }}</button>
+
+          {% if registration %}
+            <span class="pull-right pull-right-middle">{{ lang('signin.text') }} <a href="{{ page_url('signup') }}">{{ lang('signup.title') }}</a></span>
+          {% endif %}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% if authText %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="well {% if site['rtl'] %} rtl-content {% endif %}">
+          {{ authText }}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,110 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="well">
+        <form {% if site['rtl'] %} class="rtl-form"{% endif %} action="{{ page['url'] }}" method="post" id="order-form">
+          {% if error %}
+            <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {{ errorMessage }}
+            </div>
+          {% endif %}
+
+          {% if 1 == success %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4>{{lang('neworder.message.success')}}</h4>
+              {{lang('neworder.id')}}: {{order['id']}}<br>
+              {{lang('neworder.service')}}: {{order['service']}}
+              <br>
+              {{lang('neworder.link')}}: {{order['link']}}<br>
+              {{lang('neworder.quantity')}}: {{order['quantity']}}<br>
+              {{lang('neworder.charge')}}: {{order['charge']}}<br>
+              {{lang('neworder.balance')}}: {{order['balance']}}<br>
+            </div>
+          {%endif%}
+
+          {% if 2 == success %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4>{{lang('neworder.message.success')}}</h4>
+              {{lang('neworder.subscription_id')}}: {{order['id']}}<br>
+              {{lang('neworder.service')}}: {{order['service']}}
+              <br>
+              {{lang('neworder.username')}}: {{order['link']}}<br>
+              {{lang('neworder.quantity')}}:
+              {% if order['quantity_min'] == order['quantity_max'] %}
+                {{order['quantity_max']}}
+              {% else %}
+                {{order['quantity_min']}}-{{order['quantity_max']}}
+              {%endif%}
+              <br>
+              {{lang('neworder.new_posts')}}:
+              {% if 0 == order['posts'] %}
+                &#8734;
+              {% else %}
+                {{order['posts']}}
+              {%endif%}
+              <br>
+              {{lang('neworder.delay')}}:
+              {{order['delay']}}
+              <br>
+            </div>
+          {%endif%}
+
+          {% if categories %}
+            <div class="form-group">
+              <label for="orderform-category" class="control-label">{{ lang('neworder.category') }}</label>
+              <select class="form-control" id="orderform-category" name="OrderForm[category]">
+                {% for categoryId,categoryName in categories %}
+                  <option value="{{ categoryId }}" {% if categoryId == data['category'] %} selected {%endif%}>{{ categoryName }}</option>
+                {%endfor%}
+              </select>
+            </div>
+          {% endif %}
+          <div class="form-group">
+            <label for="orderform-service" class="control-label">{{ lang('neworder.service') }}</label>
+            <select id="orderform-service" class="form-control" name="OrderForm[service]"></select>
+          </div>
+
+          <div class="form-group hidden fields" id="service_description">
+            <label for="service_description" class="control-label">{{ lang('neworder.description') }}</label>
+            <div class="panel-body border-solid border-rounded">
+                {{service['description']}}
+            </div>
+          </div>
+
+          <div id="fields"></div>
+
+          <div class="form-group">
+            <label for="charge" class="control-label">{{ lang('neworder.charge') }}</label>
+            <input type="text" class="form-control" id="charge" value="{{ order['charge'] }}" readonly>
+          </div>
+
+          {% if check_agreement %}
+            <div class="form-group">
+              <label class="control-label terms">
+                <input type="checkbox"  name="OrderForm[termsofservice]" class="terms-accept-checkbox" value="1" id="terms" {{data['termsofservice'] ? 'checked' : ''}}> {{lang('signup.accept_terms_text')}}
+                <a  href="{{ page_url('terms') }}" target="_blank">{{ lang('terms.terms_of_service') }}</a>
+              </label>
+            </div>
+          {%endif%}
+
+          <input type="hidden" name="_csrf" value="{{ csrftoken }}">
+          <button type="submit" class="btn btn-primary">{{ lang('neworder.button') }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% if newOrderText %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="well {% if site['rtl'] %} rtl-content {% endif %}">
+          {{ newOrderText }}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,116 @@
+{% if paymentsList %}
+<div class="container-fluid">
+  <form method="post" action="">
+    {# ALERTS BEGIN #}
+    {% if success %}
+    <div class="alert alert-dismissible alert-success {% if site['rtl'] %} rtl-alert {% endif %}">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ successText }}
+    </div>
+    {% endif %}
+    {% if error %}
+    <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ errorText }}
+    </div>
+    {% endif %}
+    {# ALERTS END #}
+    <div class="mb-3">
+      <label for="method" class="form-label">{{ lang('addfunds.method') }}</label>
+      <select class="form-select" id="method" name="AddFoundsForm[type]" id="order_type">
+        {% for payment in paymentsList %}
+        <option value="{{ payment['id'] }}"{% if currentPayment == payment['id'] %} selected{% endif %}>{{ payment['name'] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="amount" class="form-label">{{ lang('addfunds.amount') }}</label>
+      <input type="number" class="form-control"  name="AddFoundsForm[amount]" id="amount">
+    </div>
+    {% if site['cpf_field'] %}
+    <div class="mb-3">
+      <label for="cpf" class="form-label">{{ lang('addfunds.cpf') }}</label>
+      <input type="text" class="form-control"  name="AddFoundsForm[cpf]" id="cpf">
+    </div>
+    {% endif %}
+    <input type="hidden" name="_csrf" value="{{ csrftoken }}">
+    <button type="submit" class="btn btn-primary">{{ lang('addfunds.button') }}</button>
+  </form>
+</div>
+{% endif %}
+
+{% if addfunds %}
+{{ addfunds }}
+{% endif %}
+
+{% if paymentList %}
+<table class="table">
+  <thead>
+  <tr>
+    <th>{{ lang('addfunds.id') }}</th>
+    <th>{{ lang('addfunds.date') }}</th>
+    <th>{{ lang('addfunds.method') }}</th>
+    <th>{{ lang('addfunds.amount') }}</th>
+  </tr>
+  </thead>
+  <tbody>
+    {% for payment in paymentList %}
+    <tr>
+      <td>{{ payment['id'] }}</td>
+      <td><span class="text-nowrap">{{ payment['date'] }}</span></td>
+      <td>{{ payment['method'] }}</td>
+      <td>
+        {% if payment['original_amount'] %}
+        <span data-toggle="tooltip" data-placement="left" title="{{ payment['original_amount'] }}&nbsp;{{ payment['original_currency'] }}">≈ {{ payment['amount'] }}</span>
+        {% else %}
+        {{ payment['amount'] }}
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if pagination['count'] > 50 %}
+<div class="nav-pills">
+  <ul class="pagination">
+    {% if pagination['current'] != 1 %}
+    <li class="page-item">
+      <a class="page-link" href="{{ page['url'] }}/{{ pagination['last'] }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% endif %}
+
+    {% set r, l = 3, 3 %}
+
+    {% if pagination['current'] == 1 %}
+      {% set r = 6 %}
+    {% endif %}
+
+    {% if pagination['current'] == 2 %}
+      {% set r = 5 %}
+    {% endif %}
+
+    {% if pagination['current'] >= pagination['pages'] %}
+      {% set l = 5 %}
+    {% endif %}
+
+    {% for i in 1..ceil(pagination['pages']) %}
+    {% if i >= (pagination['current']-l) and i <= (pagination['current']+r) %}
+    <li class="page-item"{% if i == pagination['current'] %} class="active"{% endif %}><a class="page-link" href="{{ page['url'] }}/{{i}}">{{i}}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if pagination['current'] < pagination['pages'] %}
+    <li class="page-item">
+      <a class="page-link" href="{{ page['url'] }}/{{ pagination['next'] }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</div>
+{% endif %}
+
+{% endif %}

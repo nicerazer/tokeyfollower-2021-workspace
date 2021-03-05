@@ -5,10 +5,17 @@
     "seo_desc": "",
     "favicon": "#",
     "custom_header": "",
-    "logo": "#",
+    "logo": "tf-wide.png",
     "name": "TokeyFollower",
     "menu": [
-      {"active": true, "link": "#", "name":"Default"}
+      {"active": true, "link": "#", "name":"Menu1"},
+      {"active": false, "link": "#", "name":"Menu2"},
+      {"active": false, "link": "#", "name":"Menu3"}
+    ],
+    "account_menu": [
+      {"active": true, "link": "#", "name":"Menu1"},
+      {"active": false, "link": "#", "name":"Menu2"},
+      {"active": false, "link": "#", "name":"Menu3"}
     ],
     "active_menu": "account",
     "counterOrdersAll": 15,
@@ -16,16 +23,28 @@
       { "href": "app.min.css" }
     ],
     "scripts": [
-      {"src": "jquery.min.js"},
-      {"src": "bootstrap.min.js"},
       {"src": "app.min.js"},
-      {"code": "var varFromCommonsJson"}
-    ]
+      {"src": "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"},
+      {"code": "var varFromCommonsJson = 'Hi!';"}
+    ],
+    "average_time": true
   },
   "user": {
-    "auth": true,
     "balance": 20,
     "username": "IqbalZZ"
   },
-  "page": "title"
+  "page": "title",
+  "1": "success",
+  "order": [
+    {"id": "727"},
+    {"service": "Facebook IG"},
+    {"link": "www.tokeyfollower.com"},
+    {"quantity": "727"},
+    {"charge": "RM7"},
+    {"balance": "RM727"}
+  ],
+  "categories": {
+    "1": "Fast Refill",
+    "2": "Slow Refill"
+  }
 }

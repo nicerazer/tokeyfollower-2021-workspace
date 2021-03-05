@@ -1,0 +1,99 @@
+<section class="text-center py-5 container-fluid bg-light bg-gradient">
+  <h1 class="h1 fw-bold">TokeyFollower</h1>
+  <p class="lead">Pengalaman menggunakan servis follower yang terbaik anda akan alami!</p>
+</section>
+
+<section class="bg-main">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-md-7">
+        <div class="my-5 py-4">
+          <div class="mb-5">
+            <h1 class="text-light mb-1">MALAYSIA FOLLOWER 100% DISINI</h1>
+            <h2 class="text-light mb-4">Daftar Sekarang Untuk Dapatkan Bonus!</h2>
+          </div>
+          <a class="btn btn-primary btn-lg rounded-pill" href="www.tokeyfollower.com/signup"><h4 class="my-3 mx-4 text-dark">JOIN NOW</h4></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="bg-primary py-1"></div>
+
+<section class="bg-light">
+  <div class="container py-5">
+
+    {% if error %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      {{ errorMessage }} Check this error message out
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>    
+    {% endif %}
+
+    {% if success %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ successMessage }} This is a success message
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>    
+    {% endif %}
+
+    <form method="post" action="{{ page['url'] }}">    
+
+      <input type="hidden" name="_csrf" value="{{csrftoken}}">
+
+      <div class="row g-4 mb-3">
+        <div class="col-md-5">
+          <div class="form-floating">
+            <input name="LoginForm[username]" type="text" class="form-control" id="floatingInput" placeholder="username">
+            <label for="floatingInput">{{ lang('signup.username') }} Username</label>
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <div class="form-floating">
+            <input name="LoginForm[password]" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">{{lang('signup.password')}} Password</label>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="d-grid h-100">
+            <button type="submit" class="btn btn-primary h-100">{{ lang('signin.button') }}Log Masuk</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-5">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox"  name="LoginForm[remember]" value="1" id="remember">{{lang('signin.remember_me')}} Remember me
+            </label>
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          {% if site['resetPassword'] %}
+          <a href="{{ page_url('resetpassword') }}" class="forgot-password">{{ lang('signin.reset_password') }} Reset</a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="mb-3">
+        {% if registration %}
+        <span>{{ lang('signin.text') }}No account? <a class="text-decoration-none" href="{{ page_url('signup') }}">{{ lang('signup.title') }}Register now</a></span>
+        {% endif %}
+      </div>
+
+      {% if captcha %}
+      {{ captchaCode }}
+      {% endif %}
+    </form>
+
+  </div>
+</section>
+
+{% if authText %}
+{{ authText }}
+{% endif %}

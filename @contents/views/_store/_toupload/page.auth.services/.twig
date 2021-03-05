@@ -1,0 +1,50 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th>{{ lang('services.id') }}</th>
+    <th class="width-service-name">{{ lang('services.name') }}</th>
+    <th class="text-nowrap">{{ lang('services.rate') }}</th>
+    <th class="text-nowrap">{{ lang('services.min') }}</th>
+    <th class="text-nowrap">{{ lang('services.max') }}</th>
+    {% if site['average_time'] %}
+    <th class="text-nowrap">{{ lang('services.average_time') }}
+      <span class="bi bi-exclamation-circle" data-toggle="tooltip" data-placement="top" title="{{ lang('services.average_time.description') }}"></span>
+    </th>
+    {% endif %}
+    {% if serviceDescription %}
+    <th class="d-none d-block-md service-description__th">{{ lang('services.description') }}</th>
+    {% endif %}
+  </tr>
+  </thead>
+  <tbody>
+  {% for category in serviceCategoryList %}
+    {% if category['name'] %}
+    <tr>
+      <td colspan="6"><strong>{{ category['name'] }}</strong></td>
+    </tr>
+    {% endif %}
+    {% for service in category['services'] %}
+    <tr>
+      <td>{{ service['id'] }}</td>
+      <td class="service-name">{{ service['name'] }}</td>
+      <td>{{ service['rate'] }}</td>
+      <td>{{ service['min'] }}</td>
+      <td>{{ service['max'] }}</td>
+      {% if site['average_time'] %}
+      <td class="text-nowrap">{{ service['average_time'] }}</td>
+      {% endif %}
+      {% if serviceDescription %}
+      <td class="d-none d-md-block service-description">{{service['description']}}</td>
+      <tr class="d-block d-md-none service-description">
+        <td colspan="6">{{service['description']}}</td>
+      </tr>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  {% endfor%}
+  </tbody>
+</table>
+
+{% if servicesText %}
+{{ servicesText }}
+{% endif %}

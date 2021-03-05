@@ -1,0 +1,64 @@
+<div class="mb-3 my-5 container">
+  <form {% if site['rtl'] %}class="rtl-form"{% endif %} action="" method="post">
+    {% if error %}
+      <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ errorMessage }}
+      </div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert-dismissible alert-success {% if site['rtl'] %} rtl-alert {% endif %}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ successText }}
+      </div>
+    {% endif %}
+    <div class="form-group">
+      <label for="username" class="control-label">{{ lang('signup.username') }}</label>
+      <input type="text" class="form-control" id="username" value="{{ data['login'] }}" name="RegistrationForm[login]">
+    </div>
+    {% if name_fields %}
+      <div class="form-group">
+        <label for="firstname" class="control-label">{{ lang('signup.firstname') }}</label>
+        <input type="text" class="form-control" id="firstname" value="{{ data['firstname'] }}" name="RegistrationForm[first_name]">
+      </div>
+      <div class="form-group">
+        <label for="lastname" class="control-label">{{ lang('signup.lastname') }}</label>
+        <input type="text" class="form-control" id="lastname" value="{{ data['lastname'] }}" name="RegistrationForm[last_name]">
+      </div>
+    {% endif %}
+    <div class="form-group">
+      <label for="email" class="control-label">{{ lang('signup.email') }}</label>
+      <input type="email" class="form-control" id="email" value="{{ data['email'] }}" name="RegistrationForm[email]">
+    </div>
+    {% if skype_field %}
+      <div class="form-group">
+        <label for="skype" class="control-label">{{ lang('signup.skype') }}</label>
+        <input type="text" class="form-control" id="skype" value="{{ data['skype'] }}" name="RegistrationForm[skype]">
+      </div>
+    {% endif %}
+    <div class="form-group">
+      <label for="password" class="control-label">{{ lang('signup.password') }}</label>
+      <input type="password" class="form-control" id="password" name="RegistrationForm[password]">
+    </div>
+    <div class="form-group">
+      <label for="confirm" class="control-label">{{ lang('signup.confirm') }}</label>
+      <input type="password" class="form-control" id="confirm" name="RegistrationForm[password_again]">
+    </div>
+    {% if site['captcha'] %}
+      {{ captchaCode }}
+    {% endif %}
+    {% if check_agreement %}
+      <div class="form-group">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" class="terms-accept-checkbox" name="RegistrationForm[termsofservice]"> {{ lang('signup.accept_terms_text') }} <a href="{{ page_url('terms') }}" target="_blank">{{ lang('terms.terms_of_service') }}</a>
+          </label>
+        </div>
+      </div>
+    {% endif %}
+
+    <input type="hidden" name="_csrf" value="{{csrftoken}}">
+    <button type="submit" class="btn btn-primary">{{ lang('signup.button') }}</button>
+    <span class="pull-right pull-right-middle">{{ lang('signup.text') }} <a href="{{ page_url('signin') }}">{{ lang('signin.title') }}</a></span>
+  </form>
+</div>

@@ -1,0 +1,22 @@
+{
+  "user": {
+    "auth": false
+  },
+  "servicesText": true,
+  "servicesDescription": true,
+  "serviceCategoryList": [
+    {
+      "name": "Oneone", 
+      "services": [
+        {
+          "id": "Oneone",
+          "name": "Oneone",
+          "rate": "Oneone",
+          "min": "Oneone",
+          "max": "Oneone",
+          "description": "Oneone"
+        }
+      ]
+    }
+  ]
+}

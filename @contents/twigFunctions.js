@@ -5,6 +5,15 @@ exports.twigFunctions = [
           return {
             'account.title': 'Bob Joe Sandman',
             'signin.logout': '#',
+            'neworder.message.success': 'Selesai kemaskini!',
+            'neworder.id': 'ID',
+            'neworder.service': 'Servis',
+            'neworder.link': 'Link',
+            'neworder.quantity': 'Kuantiti',
+            'neworder.charge': 'Bayaran',
+            'neworder.balance': 'Baki',
+
+            'neworder.category': 'Category',
           }[lang];
       }
   },

@@ -3,7 +3,7 @@
 var log = require('fancy-log');
 const gulp = require('gulp');
 
-const less         = require('gulp-less'),
+const Fiber        = require('fibers'),
       sass         = require('gulp-sass'),
       cleanCss     = require('gulp-clean-css'),
       minifyJs     = require('gulp-babel-minify'),
@@ -11,24 +11,48 @@ const less         = require('gulp-less'),
       twig         = require('gulp-twig'),
       rename       = require('gulp-rename'),
       bootlint     = require('gulp-bootlint'),
+      concat       = require('gulp-concat'),
       cleanFiles   = require('gulp-clean'),
       replace      = require('gulp-replace'),
       prettyHtml   = require('gulp-pretty-html'),
       browserSync  = require('browser-sync').create(),
       fs           = require('fs');
 
+      sass.compiler = require('sass');
+
 function _replaceAndCapitalizeDotsSeparator(str) {
-  return str.split('.').map((substr, i) => i === 0 ? substr : substr.charAt(0).toUpperCase() + substr.substring(1) ).join('');
+  return str
+    .toLowerCase()
+    .split('.')
+    .map((substr, i) => i === 0 ? substr : substr.charAt(0).toUpperCase() + substr.substring(1) )
+    .join('');
 }
 
 function _discoverPages() {
-  var directoryStructure = fs.readdirSync('./@contents/views');
-  var filteredDirectoryStructures = directoryStructure
-    .filter((item) => item.includes('page'))
-    .map(item => item.replace('page.', ''));
-  log('Discovered', '\x1b[32m', filteredDirectoryStructures);
+  let directoryStructure = fs.readdirSync('./@contents/views');
+
+  // Categorize first, process afterwards
+  let discoveredPages = directoryStructure
+    .filter(item => item.includes('page'))
+    .map((item) => {
+      let extractedPageName = item.replace(/page\.public\.|page\.auth\.|page\./, '');
+      let extractedPagePrefix = 'undefined';
+      if(item.includes("public")) {
+        extractedPagePrefix = 'page.public';
+      } else if (item.includes("auth")) {
+        extractedPagePrefix = 'page.auth';
+      } else {
+        extractedPagePrefix = 'page';
+      }
+      return {name:extractedPageName, prefix: extractedPagePrefix};
+    });
+
+  let discoveredPageNames = discoveredPages.map(item => item.name);
+
+  log('Discovered', '\x1b[32m', discoveredPageNames);
+
   return new Promise((resolve) => {
-    resolve(filteredDirectoryStructures);
+    resolve(discoveredPages);
   });
 }
 
@@ -68,32 +92,33 @@ function __parseTwig(sourceTwigPath, destinationPath, twigDetailsObject, renameD
   });
 }
 
-function _innerTwigify(pageName) {
-  const parsedJsonData = JSON.parse(fs.readFileSync(`./@contents/views/page.${pageName}/.json`));
+/** Page prefix seperated by comma */
+function _innerTwigify(pageName, pagePrefix) {
+  const parsedJsonData = JSON.parse(fs.readFileSync(`./@contents/views/${pagePrefix}.${pageName}/.json`));
   return __embedTwig(
-    `./@contents/views/page.${pageName}/.twig`,
+    `./@contents/views/${pagePrefix}.${pageName}/.twig`,
     `{{ ${_replaceAndCapitalizeDotsSeparator(pageName)}Text }}`,
-    `./@contents/views/page.${pageName}/.html`,
-    { basename: pageName, prefix: 'page.', suffix: '.inner.embedded', extname: '.twig' }
+    `./@contents/views/${pagePrefix}.${pageName}/.html`,
+    { basename: pageName, prefix: `${pagePrefix}.`, suffix: '.inner.embedded', extname: '.twig' }
   ).then(() => { return __parseTwig(
-    `./@contents/_cache/page.${pageName}.inner.embedded.twig`,
+    `./@contents/_cache/${pagePrefix}.${pageName}.inner.embedded.twig`,
     './@contents/_cache',
     { data: parsedJsonData },
-    { basename: pageName, prefix: 'page.', suffix: '.inner.twigged', extname: '.html' }
+    { basename: pageName, prefix: `${pagePrefix}.`, suffix: '.inner.twigged', extname: '.html' }
   ); });
 }
 
-function _outerTwigify(pageName) {
+function _outerTwigify(pageName, pagePrefix) {
   const { twigFunctions } = require('./@contents/twigFunctions');
   const parsedJsonData = JSON.parse(fs.readFileSync(`./@contents/views/commons.json`));
 
   return __embedTwig(
     './@contents/views/layout.app.twig',
     '{{ content }}',
-    `./@contents/_cache/page.${pageName}.inner.twigged.html`,
-    { basename: pageName, prefix: 'page.', suffix: '.outer.embedded', extname: '.twig' }
+    `./@contents/_cache/${pagePrefix}.${pageName}.inner.twigged.html`,
+    { basename: pageName, prefix: `${pagePrefix}.`, suffix: '.outer.embedded', extname: '.twig' }
   ).then(() => { return __parseTwig(
-    `./@contents/_cache/page.${pageName}.outer.embedded.twig`,
+    `./@contents/_cache/${pagePrefix}.${pageName}.outer.embedded.twig`,
     './@contents/@exported_html',
     { data: parsedJsonData, functions: twigFunctions },
     { basename: pageName, extname: '.html' }
@@ -103,13 +128,13 @@ function _outerTwigify(pageName) {
 async function compileAllPages(cb) {
   browserSync.notify("Compiling, please wait!", 3000);
   try {
-    await _discoverPages().then(async pageNames => {
-      for (const pageName of pageNames) {
-        log(`Compiling Inner Twig: \x1b[33m${pageName}`);
-        await _innerTwigify(pageName)
+    await _discoverPages().then(async pages => {
+      for (const page of pages) {
+        log(`Compiling Inner Twig: \x1b[33m${page.name}`);
+        await _innerTwigify(page.name, page.prefix)
         .then(() => {
-          log(`Compiling Outer Twig: \x1b[33m${pageName}`);
-          return _outerTwigify(pageName);
+          log(`Compiling Outer Twig: \x1b[33m${page.name}`);
+          return _outerTwigify(page.name, page.prefix);
         });
       }
     });
@@ -122,7 +147,7 @@ async function compileAllPages(cb) {
 
 function compileCss() {
   return gulp.src('./@contents/sass/app.scss')
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass({fiber:Fiber}).on('error', sass.logError))
     .pipe(autoprefixer())
     .pipe(cleanCss())
     .pipe(rename({ basename: 'app', extname: '.min.css' }))
@@ -137,11 +162,26 @@ function compileJs() {
     .pipe(gulp.dest('./@contents/@exported_js'));
 }
 
-function fetchVendorJs() {
+// function fetchVendorJs() {
+//   return gulp.src([
+//     './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
+//     './node_modules/jquery/dist/jquery.min.js',
+//   ])
+//   .pipe(minifyJs())
+//   .pipe(rename({ basename: 'vendor', extname: '.min.js' }))
+//   .pipe(gulp.dest('./@contents/@exported_js'));
+// }
+
+function fetchVendorAndCompileJs() {
   return gulp.src([
-    './node_modules/bootstrap/dist/js/bootstrap.min.js',
-    './node_modules/jquery/dist/jquery.min.js'
-  ]).pipe(gulp.dest('./@contents/@exported_js'));
+    './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
+    './node_modules/jquery/dist/jquery.min.js',
+    './@contents/js/app.js',
+  ])
+  .pipe(concat('app.min.js'))
+  .pipe(minifyJs())
+  .pipe(rename({ basename: 'app', extname: '.min.js' }))
+  .pipe(gulp.dest('./@contents/@exported_js'));
 }
 
 function verifyMarkup() {
@@ -155,16 +195,16 @@ function cleanCache(dirs) {
   .pipe(cleanFiles());
 }
 
-exports.innerT = () => {
-  return _innerTwigify('auth.nyaa');
-}
+// exports.innerT = () => {
+//   return _innerTwigify('auth.nyaa');
+// }
 
-exports.nyaIfy = () => {
-  return gulp.src('./@experiments/text.twig')
-  .pipe(replace("foo", "what you are doing bro"))
-  .pipe(twig())
-  .pipe(gulp.dest('./@experiments'));
-}
+// exports.nyaIfy = () => {
+//   return gulp.src('./@experiments/text.twig')
+//   .pipe(replace("foo", "what you are doing bro"))
+//   .pipe(twig())
+//   .pipe(gulp.dest('./@experiments'));
+// }
 
 exports.discoverPages = _discoverPages;
 
@@ -180,7 +220,8 @@ exports.default = () => {
   gulp.watch('./@contents/views', { ignoreInitial: false },
     gulp.series(() => { return cleanCache(['./@contents/_cache/*','./@contents/@exported_html/*']) }, compileAllPages, verifyMarkup)
   );
-  gulp.watch('./@contents/js', { ignoreInitial: false }, gulp.series(() => { return cleanCache('./@contents/@exported_js/*.js') }, compileJs, fetchVendorJs));
+  // gulp.watch('./@contents/js', { ignoreInitial: false }, gulp.series(() => { return cleanCache('./@contents/@exported_js/*.js') }, compileJs, fetchVendorJs));
+  gulp.watch('./@contents/js', { ignoreInitial: false }, gulp.series(() => { return cleanCache('./@contents/@exported_js/*.js') }, fetchVendorAndCompileJs));
   gulp.watch('./@contents/sass', { ignoreInitial: false }, gulp.series(() => { return cleanCache('./@contents/@exported_css/*.css') }, compileCss));
 
   // Full Reload

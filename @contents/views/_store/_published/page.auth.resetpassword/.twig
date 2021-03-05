@@ -1,0 +1,28 @@
+{% if site['resetPassword'] %}
+<form method="post" action="">
+  <h3>{{ lang('resetpassword.title') }}</h3>
+  {# ALERT BEGIN #}
+  {% if error %}
+  <div class="alert alert-dismissible alert-danger">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ errorMessage }}
+  </div>
+  {% endif %}
+  {% if success %}
+  <div class="alert alert-dismissible alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ successText }}
+  </div>
+  {% endif %}
+  {# ALERT END #}
+  <div class="mb-3">
+    <label for="email" class="form-label">{{ lang('resetpassword.email') }}</label>
+    <input type="email" class="form-control" id="email" name="ResetPasswordForm[email]">
+  </div>
+  {% if site['captcha'] %}
+    {{ captchaCode }}
+  {% endif %}
+  <button type="submit" class="btn btn-primary">{{ lang('resetpassword.button.send') }}</button>
+  <input type="hidden" name="_csrf" value="{{csrftoken}}">
+</form>
+{% endif %}

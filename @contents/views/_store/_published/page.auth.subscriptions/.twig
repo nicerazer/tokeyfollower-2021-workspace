@@ -1,0 +1,111 @@
+<div class="container-fluid">
+  <ul class="nav nav-pills">
+    <li {% if 'all' == status %}class="active nav-item"{% else %}class="nav-item"{% endif %}><a class="nav-link" href="{{ page['url'] }}">{{ lang('subscriptions.status.all') }}</a></li>
+    <li {% if 'active' == status %}class="active nav-item"{% else %}class="nav-item"{% endif %}><a class="nav-link" href="{{ page['url'] }}/active">{{ lang('subscriptions.status.active') }}</a></li>
+    <li {% if 'paused' == status %}class="active nav-item"{% else %}class="nav-item"{% endif %}><a class="nav-link" href="{{ page['url'] }}/paused">{{ lang('subscriptions.status.paused') }}</a></li>
+    <li {% if 'completed' == status %}class="active nav-item"{% else %}class="nav-item"{% endif %}><a class="nav-link" href="{{ page['url'] }}/completed">{{ lang('subscriptions.status.completed') }}</a></li>
+    <li {% if 'expired' == status %}class="active nav-item"{% else %}class="nav-item"{% endif %}><a class="nav-link" href="{{ page['url'] }}/expired">{{ lang('subscriptions.status.expired') }}</a></li>
+    <li {% if 'canceled' == status %}class="active nav-item"{% else %}class="nav-item"{% endif %}><a class="nav-link" href="{{ page['url'] }}/canceled">{{ lang('subscriptions.status.canceled') }}</a></li>
+    <li class="float-end search">
+      <form action="{{ page['url'] }}" method="get" id="history-search">
+        <div class="input-group">
+          <input type="text" name="search" class="form-control" placeholder="{{lang('subscriptions.search.placeholder')}}" value="{{search}}">
+          <button type="submit" class="btn btn-primary"><i class="bi bi-search" aria-hidden="true"></i></button>
+        </div>
+      </form>
+    </li>
+  </ul>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>{{ lang('subscriptions.id') }}</th>
+      <th>{{ lang('subscriptions.username') }}</th>
+      <th>{{ lang('subscriptions.quantity') }}</th>
+      <th>{{ lang('subscriptions.posts') }}</th>
+      <th>{{ lang('subscriptions.delay') }}</th>
+      <th>{{ lang('subscriptions.service') }}</th>
+      <th>{{ lang('subscriptions.status') }}</th>
+      <th>{{ lang('subscriptions.created') }}</th>
+      <th>{{ lang('subscriptions.updated') }}</th>
+      <th>{{ lang('subscriptions.expiry') }}</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for order in orderList %}
+    <tr>
+      <td>{{ order['id'] }}</td>
+      <td class="link">{{ order['link'] }}</td>
+      <td class="nowrap">{% if order['quantity_min'] == order['quantity_max'] %}{{ order['quantity_max']}}{% else %}{{ order['quantity_min'] }}-{{ order['quantity_max'] }}{% endif %}</td>
+      <td class="nowrap">
+        {% if order['current_count'] %}
+          <a href="{{ page_url('orders') }}?subscription={{ order['id'] }}">{{ order['current_count'] }}</a>
+        {% else %}
+          {{ order['current_count'] }}
+        {% endif %}
+        / {% if order['quantity'] == 0 %}&#8734;{% else %}{{ order['quantity'] }}{% endif %}</td>
+      <td>{{ order['delay'] }}</td>
+      <td>{{ order['service'] }}</td>
+      <td>{{ order['status_name'] }}</td>
+      <td><span class="nowrap">{{ order['date_created'] }}</span></td>
+      <td><span class="nowrap">{{ order['date_updated'] }}</span></td>
+      <td><span class="nowrap">{{ order['date_expiry'] }}</span></td>
+      <td>
+        {% if order['status'] == 1 or order['status'] == 0 %}
+          <a href="{{ page['url'] }}/stop/{{order['id']}}" class="btn btn-default btn-xs">{{ lang('subscriptions.button.cancel') }}</a>
+        {% endif %}
+        {% if order['status'] == 2 %}
+          <a href="{{ page['url'] }}/resume/{{order['id']}}" class="btn btn-primary btn-xs">{{ lang('subscriptions.button.unpause') }}</a>
+        {% endif %}
+        {% if order['status'] == 3 or order['status'] == 4 or order['status'] == 5 %}
+          <a href="{{ page['url'] }}/reorder/{{order['id']}}" class="btn btn-primary btn-xs">{{ lang('subscriptions.button.reorder') }}</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+  </table>
+
+  {% if pagination['count'] > 100 %}
+  <ul class="pagination">
+    {% if pagination['current'] != 1 %}
+      <li class="page-item">
+        <a class="page-link" href="{{ page['url'] }}/{{ status }}/{{ pagination['last'] }}{% if search %}?search={{ search }}{% endif %}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+    {% endif %}
+
+    {% set r, l = 3, 3 %}
+
+    {% if pagination['current'] == 1 %}
+      {% set r = 6 %}
+    {% endif %}
+
+    {% if pagination['current'] == 2 %}
+      {% set r = 5 %}
+    {% endif %}
+
+    {% if pagination['current'] >= pagination['pages'] %}
+      {% set l = 5 %}
+    {% endif %}
+
+    {% for i in 1..ceil(pagination['pages']) %}
+    {% if i >= (pagination['current']-l) and i <= (pagination['current']+r) %}
+    <li{% if i == pagination['current'] %} class="page-item active" {% else %} class="page-item" {% endif %}><a href="{{ page['url'] }}/{{ status }}/{{i}}{% if search %}?search={{ search }}{% endif %}">{{i}}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if pagination['current'] < pagination['pages'] %}
+    <li class="page-item">
+      <a class="page-link" href="{{ page['url'] }}/{{ status }}/{{ pagination['next'] }}{% if search %}?search={{ search }}{% endif %}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {%endif%}
+  </ul>
+  {% endif %}
+
+</div>

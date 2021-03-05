@@ -1,0 +1,32 @@
+<div class="my-5 container">
+  <form {% if site['rtl'] %}class="rtl-form"{% endif %} method="post" action="{{ page['url'] }}">
+    {% if 1 == success %}
+      <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4>{{lang('massorder.message.success')}}</h4>
+        {{lang('massorder.orders')}}: {{order['success']}}<br>
+        {{lang('massorder.errors')}}: {{order['error']}}<br>
+        <a href="{{ order['link'] }}" target="_blank">{{ lang('massorder.button.details') }}</a>
+      </div>
+    {%endif%}
+    {% if error %}
+      <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+          {% if order['link'] %}
+              <h4>{{ errorText }}</h4>
+              {{lang('massorder.orders')}}: {{order['success']}}<br>
+              {{lang('massorder.errors')}}: {{order['error']}}<br>
+              <a href="{{ order['link'] }}" target="_blank">{{ lang('massorder.button.details') }}</a>
+          {% else %}
+              {{ errorText }}
+          {% endif %}
+      </div>
+    {% endif %}
+    <div class="form-group">
+      <label for="links" class="control-label">{{ lang('massorder.label') }}</label>
+      <textarea class="form-control" name="MassOrderForm[orders]" rows="15" id="links" placeholder="{{ lang('massorder.placeholder') }}"></textarea>
+    </div>
+    <input type="hidden" name="_csrf" value="{{csrftoken}}">
+    <button type="submit" class="btn btn-primary">{{ lang('massorder.button') }}</button>
+  </form>
+</div>

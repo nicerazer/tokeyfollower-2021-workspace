@@ -9,9 +9,10 @@
   "author": "nicerazer",
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "^3.3.7",
-    "bootstrap-sass": "^3.4.1",
+    "bootstrap": "^5.0.0-beta2",
+    "bootstrap-icons": "^1.4.0",
     "browser-sync": "^2.26.12",
+    "fibers": "^5.0.0",
     "fs": "0.0.1-security",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
@@ -19,15 +20,17 @@
     "gulp-bootlint": "^1.1.0",
     "gulp-clean": "^0.4.0",
     "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
     "gulp-less": "^4.0.1",
     "gulp-pretty-html": "^2.0.10",
     "gulp-rename": "^2.0.0",
     "gulp-replace": "^1.0.0",
     "gulp-twig": "^1.2.0",
-    "jquery": "^3.5.1"
+    "jquery": "^1.12.4",
+    "sass": "^1.32.8",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
-    "gulp-sass": "^4.1.0",
-    "node-sass": "^5.0.0"
+    "gulp-sass": "^4.1.0"
   }
 }

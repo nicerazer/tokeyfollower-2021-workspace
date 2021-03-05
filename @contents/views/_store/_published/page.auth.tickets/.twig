@@ -1,0 +1,100 @@
+<form method="post" action="" id="ticketsend">
+    <div class="alert alert-dismissible alert-danger ticket-danger {% if site['rtl'] %} rtl-alert {% endif %}" style="display: none">
+      <button type="button" class="close">&times;</button>
+      <div></div>
+    </div>
+  <div class="form-group">
+    <label for="subject" class="control-label">{{ lang('tickets.subject') }}</label>
+    <input type="text" class="form-control" id="subject" name="TicketForm[subject]">
+  </div>
+  <div class="form-group">
+    <label for="message" class="control-label">{{ lang('tickets.message') }}</label>
+    <textarea class="form-control" rows="7" id="message" name="TicketForm[message]"></textarea>
+  </div>
+  <input type="hidden" name="_csrf" value="{{csrftoken}}">
+  <button type="submit" class="btn btn-primary">{{ lang('tickets.button') }}</button>
+</form>
+
+{% if ticketList or search %}
+<div class="nav-pills">
+  <form action="{{ page['url'] }}" method="get" id="history-search">
+    <div class="mb-3">
+      <input type="text" class="form-input" value="{{ search }}" name="search" placeholder="{{ lang('tickets.search.placeholder') }}">
+      <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
+    </div>
+  </form>
+</div>
+{% endif %}
+
+{% if ticketList %}
+<table class="table">
+  <thead>
+  <tr>
+    <th>{{ lang(tickets.id) }}</th>
+    <th>{{ lang('tickets.subject') }}</th>
+    <th>{{ lang('tickets.status') }}</th>
+    <th class="nowrap">{{ lang('tickets.updated') }}</th>
+  </tr>
+  </thead>
+  <tbody>
+    {% for ticket in ticketList %}
+    <tr>
+      <td>{{ ticket['id'] }}</td>
+      {% if ticket['new'] == 1 %}
+      <td><a href="{{ page_url('viewticket') }}/{{ ticket['id'] }}"><strong>{{ ticket['theme'] }}</strong></a></td>
+      {% else %}
+      <td><a href="{{ page_url('viewticket') }}/{{ ticket['id'] }}">{{ticket['theme']}}</a></td>
+      {% endif %}
+      <td>{{ ticket['status'] }}</td>
+      <td><span class="nowrap">{{ ticket['time'] }}</span></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if pagination['count'] > 50 %}
+<div class="nav-pills">
+  <ul class="pagination">
+    {% if pagination['current'] != 1 %}
+    <li class="page-item">
+      <a class="page-link" href="{{ page['url'] }}/{{ pagination['last'] }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% endif %}
+
+    {% set r, l = 3, 3 %}
+
+    {% if pagination['current'] == 1 %}
+      {% set r = 6 %}
+    {% endif %}
+
+    {% if pagination['current'] == 2 %}
+      {% set r = 5 %}
+    {% endif %}
+
+    {% if pagination['current'] >= pagination['pages'] %}
+      {% set l = 5 %}
+    {% endif %}
+
+    {% for i in 1..ceil(pagination['pages']) %}
+    {% if i >= (pagination['current']-l) and i <= (pagination['current']+r) %}
+    <li{% if i == pagination['current'] %}class="active page-item"{% else %}class="page-item"{% endif %}><a class="page-link" href="{{ page['url'] }}/{{i}}">{{i}}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if pagination['current'] < pagination['pages'] %}
+    <li class="page-item">
+      <a class="page-link" href="{{ page['url'] }}/{{ pagination['next'] }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</div>
+{% endif %}
+
+{% if ticketsText %}
+{{ ticketsText }}
+{% endif %}

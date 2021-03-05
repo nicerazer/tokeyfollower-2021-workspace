@@ -1,190 +1,120 @@
 <!DOCTYPE html>
 <html lang="{{site['language']}}">
 <head>
-  {# Commons: MetaTags #}
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page['title'] }}</title>
   <meta name="keywords" content="{{ site['seo_key'] }}">
   <meta name="description" content="{{ site['seo_desc'] }}">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  {# Commons: Header-Icon #}
   {% if site['favicon'] %}
   <link rel="shortcut icon" type="image/ico" href="{{ site['favicon'] }}" />
   {% endif %}
 
-  {# Commons: Header-ManualInjectedStyles:HighLevelStyle  #}
   {{ site['custom_header'] }}
 
-  {# Commons: Header-AutoStyles  #}
   {% for style in site['styles'] %}
-  <link rel="stylesheet" type="text/css" href="{{ style['href'] }}">
+  <link rel="stylesheet" type="text/css" href="{{ style['href'] }}">    
   {% endfor %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" />
 </head>
 <body>
 
-{# Layout: Public #}
-{% if not user['auth'] %}
-<main id="tf-public">
-  <div class="tf-common--pagecontent">
-  {{ content }}
+{% if user['auth'] %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ page_url('index') }}">
+      {% if site['logo'] %}
+        <img src="{{ site['logo'] }}" alt="{{ site['name'] }}" title="{{ site['name'] }}" width="80" height="50" class="d-inline-block align-middle">
+      {% else %}
+        {{ site['name'] }}
+      {% endif %}
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAppNavBar" aria-controls="navbarTogglerAppNavBar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarTogglerAppNavBar" class="collapse navbar-collapse">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% for menu in site['menu'] %}
+        <li class="nav-item">
+          <a {% if menu['active'] %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{ menu['link'] }}" {% if menu['external'] %} target="_blank" {% endif %}>
+            {% if menu['icon'] %}<i class="navbar-icon {{ menu['icon'] }}"></i>{% endif %}
+            {{ menu['name'] }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        {% for menu in site['account_menu'] %}
+        <li class="nav-item">
+          <a {% if menu['active'] %} class="nav-link active" aria-current="page" {% else %} class="nav-link" {% endif %} href="{{ menu['link'] }}" {% if menu['external'] %} target="_blank" {% endif %}>{{ menu['name'] }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
   </div>
-</main>
+</nav>
+{% else %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ page_url('index') }}">
+      {% if site['logo'] %}
+        <img src="{{ site['logo'] }}" alt="{{ site['name'] }}" title="{{ site['name'] }}" width="80" height="50" class="d-inline-block align-middle">
+      {% else %}
+        {{ site['name'] }}
+      {% endif %}
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAppNavBar" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbarTogglerAppNavBar" class="collapse navbar-collapse">
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        {% for menu in site['menu'] %}
+        <li class="nav-item">
+          <a {% if menu['active'] %} class="nav-link active" aria-current="page" {% else %} class="nav-link" {% endif %} href="{{ menu['link'] }}" {% if menu['external'] %} target="_blank" {% endif %}>
+            {% if menu['icon'] %}<i class="navbar-icon {{ menu['icon'] }}"></i>{% endif %}
+            {{ menu['name'] }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</nav>
 {% endif %}
 
-{# Layout: Admin #}
-<main id="tf-admin">
-  <nav id="tf-admin--sidebar">
+<!-- Main variables *content* -->
+{{ content }}
 
-    <div id="">
-      <a href="{{ page_url('index') }}">
-        {% if site['logo'] %}
-        <img class="img-responsive" src="{{ site['logo'] }}" alt="{{ site['name'] }}" title="{{ site['name'] }}">
-        {% else %}
-        <p>{{ site['name'] }}</p>
-        {% endif %}
-      </a>
-      <strong>TF</strong>
+{{ site['custom_footer'] }}
+
+<footer class="bg-dark">
+  <div class="container text-center text-light">
+    <div class="py-5">
+      <h6>Copyright@TokeyFollower2021</h6>
+      <small class="text-muted">Icons made by Skyclick from www.flaticon.com is licensed by CC 3.0</small>
     </div>
-
-    <ul class="list-unstyled components">
-      {% for menu in site['menu'] %}
-      <li{% if menu['active'] %} class="active" {% endif %}>
-        <a href="{{ menu['link'] }}">{{ menu['name'] }}</a>
-      </li>
-      {% endfor %}
-    </ul>
-
-  </nav>
-
-  <nav id="tf-admin--navbar" class="navbar navbar-default">
-    <div class="util--container-fluid">
-
-      <div class="navbar-header">
-
-        {% if user['auth'] %}
-        {% else %}
-        <a class="navbar-brand" href="{{ page_url('index') }}">
-          {% if site['logo'] %}
-          <img class="img-responsive" src="{{ site['logo'] }}" alt="{{ site['name'] }}" title="{{ site['name'] }}">
-          {% else %}
-          <p>{{ site['name'] }}</p>
-          {% endif %}
-        </a>
-        {% endif %}
-
-        {% if user['auth'] %}
-        <!-- Sidebar's hamburger -->
-        <button type="button" id="sidebarCollapse" class="navbar-toggle">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        {% endif %}
-
-        <!-- Navbar's hamburger -->
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-drawer" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-
-      </div>
-
-      <div id="navbar-drawer" class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-          {% if user['auth'] %}
-            <!-- If logged in -->
-            <li><a href="https://tokeyfollower.com/addfunds"><span class="label label-default">{{ user['balance'] }}</span></a>
-            </li>
-            <li{% if 'account' == site['active_menu'] %} class="active" {% endif %}><a href="{{ page_url('account') }}">{{ lang('account.title') }}</a>
-            </li>
-            <li><a href="{{ page_url('logout') }}"><i class="fa fa-sign-out-alt"></i> {{ lang('signin.logout') }}</a>
-            </li>
-          {% else %}
-            <!-- If not logged in -->
-            <li><a href="https://tokeyfollower.com/signup">Sign Up</a></li>
-            {% for menu in site['menu'] %}
-            <li{% if menu[ 'active'] %} class="active" {% endif %}><a href="{{ menu['link'] }}">{{ menu['name'] }}</a></li>
-            {% endfor %}
-          {% endif %}
-        </ul>
-      </div>
-
-    </div>
-
-  </nav>
-
-  <div id="tf-admin--pagecontent">
-    {{ content }}
   </div>
+</footer>
 
+{% for script in site['scripts'] %}
+<script type="text/javascript" {% if script['src'] %}src="{{ script['src'] }}"{% endif %}>
+  {% if script['code'] %} {{ script['code'] }} {% endif %}
+</script>
+{% endfor %}
 
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.plugin-slick--carousel-universal').slick({
+      dots: true,
+      arrows: true,
+      prevArrow: '<a type="button" class="btn btn-outline-secondary btn-sm mx-1 d-flex rounded-circle"><i class="bi bi-caret-left"></i></a>',
+      nextArrow: '<a type="button" class="btn btn-outline-secondary btn-sm mx-1 d-flex rounded-circle"><i class="bi bi-caret-right"></i></a>',
+    });
+  });
+</script>
 
-  {# ApplicationWrapper Begin #}
-
-    {# Commons: MetaTags #}
-    {# Commons: Header-Icon #}
-    {# Commons: Header-Links #}
-    {# Commons: Header-DependencyStyles #}
-    {# Commons: Header-ManualStyles #}
-    {# Commons: Header-AutoStyles #}
-    {# Commons: Header-AutoScripts #}
-    {# Commons: Header-ManualInjectedStyles:HighLevelStyles  #}
-
-    {# Commons Navbar #}
-
-    {#--- Layout: Public ---#}
-    {# LayoutPublic: Begin #}
-      {# LayoutPublic: PageContent #}
-    {# LayoutPublic: End #}
-
-    {#--- Layout: Admin ---#}
-    {# LayoutAdmin: Begin #}
-      {# ========= Navbar and PageContent could be on one canvas, but sidebar #}
-      {# ========= sits on top, because it will cover the screen eventually. Like youtube's #}
-      {# LayoutAdmin: Sidebar #}
-      {# LayoutAdmin: Navbar #}
-      {# LayoutAdmin: PageContent #}
-    {# LayoutAdmin: End #}
-
-    {# Commons: Footer-Section #}
-
-    {# Commons: Footer-DependencyScripts #}
-    {# Commons: Footer-ManualScripts #}
-    {# Commons: Footer-AutoScripts #}
-
-  {# ApplicationWrapper End #}
-  
-
-
-
-  <footer id="section-footer" class="bg-primary py-md text-white text-center">
-    <h3>Copyright &copy; TokeyFollower 2021</h3><small><div>Icons made by <a href="https://www.flaticon.com/authors/skyclick" title="Skyclick">Skyclick</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div></small>
-  </footer>
-
-
-  {# Commons: Footer-Auto====Scripts #}
-  {% for script in site['scripts'] %}
-  <script
-    type="text/javascript"
-    {% if script['src'] and 'jquery' not in script['src'] %}
-    src="{{ script['src'] }}"
-    {% endif %}
-  >
-    {% if script['code'] %} {{ script['code'] }} {% endif %}
-  </script>
-  {% endfor %}
-
-  <!-- Beamer configuration -->
-  <script type="text/javascript" src="https://app.getbeamer.com/js/beamer-embed.js" defer="defer"></script>
-  <script>
-    var beamer_config = {
-      product_id : 'YaLWHCSi13570' //DO NOT CHANGE: This is your product code on Beamer
-    };
-  </script>
 </body>
 </html>
