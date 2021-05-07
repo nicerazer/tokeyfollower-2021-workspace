@@ -1,8 +1,8 @@
-# Front-end Packaging with Gulp
+# TokeyFollower Packaging with Gulp
 
 A comprehensive front-end packager using [Gulp](https://gulpjs.com/)
 
-Together with [Twig](https://twig.symfony.com/) for the templating engine and [Bootstrap 3](https://getbootstrap.com/docs/3.3/) for the HTML/CSS/JS framework.
+Together with [Twig](https://twig.symfony.com/) for the templating engine and [Bootstrap 5](https://getbootstrap.com/docs/3.3/) for the HTML/CSS/JS framework.
 
 ## Installation
 
