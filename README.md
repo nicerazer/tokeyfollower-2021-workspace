@@ -1,4 +1,4 @@
-# TokeyFollower Packaging with Gulp
+# TokeyFollower Packager with Gulp
 
 A comprehensive front-end packager using [Gulp](https://gulpjs.com/)
 
