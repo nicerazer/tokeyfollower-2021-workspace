@@ -1,5 +1,5 @@
 
-<div class="text-center m-0 py-5 text-light bg-primary mb-3">
+<div class="text-center m-0 py-6 text-light bg-primary bg-gradient mb-3">
 	<h1 class="display-4"><strong><i class="bi bi-bag-check-fill"></i> Cara Order</strong></h1>
 </div>
 
@@ -7,56 +7,60 @@
 
 	<div class="row row-cols-1 row-cols-md-2 g-2">
 
-    <div class="mb-3">
-      <div class="card border-light shadow bg-body rounded">
-        <div class="d-grid">
-          <button class="btn btn-lg btn-outline-secondary d-inline-flex align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#penerangan-order-collapse" aria-expanded="true">
-            <span class="me-auto">Penerangan Order</span> <i class="bi bi-list"></i>
-          </button>
-        </div>
+		<div class="col">
+			<div class="mb-3 shadow-sm">
+				<div class="card border-light">
+					<div class="d-grid">
+						<button class="btn btn-lg btn-primary border-bottom-0 d-inline-flex align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#penerangan-order-collapse" aria-expanded="false">
+							<span class="me-auto">Penerangan Order</span> <i class="bi bi-list"></i>
+						</button>
+					</div>
 
-        <div class="collapse show" id="penerangan-order-collapse">
+					<div class="collapse" id="penerangan-order-collapse">
 
-          <div class="card-body">
-            <div class="card-text">
-      
-              <p><strong class="text-muted">ID</strong><br>Adalah No Order anda</p>
-              <p><strong class="text-muted">DATE</strong><br>Tarikh yang kita order</p>
-              <p><strong class="text-muted">LINK</strong><br>Nama ig, link gambar, link video semua yang kita order, akan keluar di link</p>
-              <p><strong class="text-muted">CHARGE</strong><br>Harga charge setiap servis yang dikenakan</p>
-              <p><strong class="text-muted">START COUNT</strong><br>Start count ni macam followers / likes / views yang sedia ada oleh account para pengguna itu sendiri</p>
-              <p><strong class="text-muted">SERVICE</strong><br>Pilihan sistem servis yang awak guna</p>
-              <p><strong class="text-muted">STATUS</strong><br>Mengetahui sama ada servis yang awak sudah submit dah masuk atau belum masuk</p>
-              <p><strong class="text-muted">REMAINS</strong><br>Jika nampak remain 0, bermakna tiada penambahan followers / likes / views tersebut. Jika ada +16 sebagai contoh, bermakna awak menerima tambahan daripada sistem tersebut</p>
-              <p><strong class="text-muted">QUANTITY</strong><br>Jumlah kuantiti followers / likes / views</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+						<div class="card-body">
+							<div class="card-text">
+				
+								<p><strong class="text-muted">ID</strong><br>Adalah No Order anda</p>
+								<p><strong class="text-muted">DATE</strong><br>Tarikh yang kita order</p>
+								<p><strong class="text-muted">LINK</strong><br>Nama ig, link gambar, link video semua yang kita order, akan keluar di link</p>
+								<p><strong class="text-muted">CHARGE</strong><br>Harga charge setiap servis yang dikenakan</p>
+								<p><strong class="text-muted">START COUNT</strong><br>Start count ni macam followers / likes / views yang sedia ada oleh account para pengguna itu sendiri</p>
+								<p><strong class="text-muted">SERVICE</strong><br>Pilihan sistem servis yang awak guna</p>
+								<p><strong class="text-muted">STATUS</strong><br>Mengetahui sama ada servis yang awak sudah submit dah masuk atau belum masuk</p>
+								<p><strong class="text-muted">REMAINS</strong><br>Jika nampak remain 0, bermakna tiada penambahan followers / likes / views tersebut. Jika ada +16 sebagai contoh, bermakna awak menerima tambahan daripada sistem tersebut</p>
+								<p><strong class="text-muted">QUANTITY</strong><br>Jumlah kuantiti followers / likes / views</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col">
+			<div class="mb-3 shadow-sm">
+				<div class="card border-light">
+					<div class="d-grid">
+						<button class="btn btn-lg btn-primary border-bottom-0 d-inline-flex align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#prosedur-order-collapse" aria-expanded="false">
+							<span class="me-auto">Prosedur Order</span> <i class="bi bi-list"></i>
+						</button>
+					</div>
 
-    <div class="mb-3">
-      <div class="card border-light shadow bg-body rounded">
-        <div class="d-grid">
-          <button class="btn btn-lg btn-outline-secondary d-inline-flex align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#prosedur-order-collapse" aria-expanded="true">
-            <span class="me-auto">Prosedur Order</span> <i class="bi bi-list"></i>
-          </button>
-        </div>
-
-        <div class="collapse show" id="prosedur-order-collapse">
-          <div class="card-body">
-            <div class="card-text">
-              <p><strong class="text-muted">PENDING</strong><br>Segala order awak telah diterima oleh sistem selepas awak submit order. Kalau lama sangat pending, tunggu je.</p>
-              <p><strong class="text-muted">IN PROGRESS</strong><br>Sistem sedang mengumpul database mengikut order yang anda submit. Kalau lama sangat pending, tunggu je.</p>
-              <p><strong class="text-muted">COMPLETED</strong><br>Yeay! Order awak sudah siap sepenuhnya!</p>
-              <p><strong class="text-muted">PARTIAL</strong><br>Order anda disekat kerana ketidakupayaan sistem untuk meneruskan. Duit dalam server telah pun direfund semula secara automatic. Oleh itu, awak kena buat new order semula.</p>
-              <p><strong class="text-muted">CANCELED</strong><br>Order awak telah dibatal antara sebabnya ialah sesuatu account itu private, link salah, quantiti nak order tu salah. Duit telah direfund semula oleh sistem tersebut. Awak hanya perlu buat new order semula sahaja.</p>
-              <p><strong class="text-muted">PROCESSING</strong><br>Order awak sedang di proses nak masukkan followers, likes, views yang awak order jadi awak perlu tunggu sahaja sehingga ia jadi COMPLETED.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+					<div class="collapse" id="prosedur-order-collapse">
+						<div class="card-body">
+							<div class="card-text">
+								<p><strong class="text-muted">PENDING</strong><br>Segala order awak telah diterima oleh sistem selepas awak submit order. Kalau lama sangat pending, tunggu je.</p>
+								<p><strong class="text-muted">IN PROGRESS</strong><br>Sistem sedang mengumpul database mengikut order yang anda submit. Kalau lama sangat pending, tunggu je.</p>
+								<p><strong class="text-muted">COMPLETED</strong><br>Yeay! Order awak sudah siap sepenuhnya!</p>
+								<p><strong class="text-muted">PARTIAL</strong><br>Order anda disekat kerana ketidakupayaan sistem untuk meneruskan. Duit dalam server telah pun direfund semula secara automatic. Oleh itu, awak kena buat new order semula.</p>
+								<p><strong class="text-muted">CANCELED</strong><br>Order awak telah dibatal antara sebabnya ialah sesuatu account itu private, link salah, quantiti nak order tu salah. Duit telah direfund semula oleh sistem tersebut. Awak hanya perlu buat new order semula sahaja.</p>
+								<p><strong class="text-muted">PROCESSING</strong><br>Order awak sedang di proses nak masukkan followers, likes, views yang awak order jadi awak perlu tunggu sahaja sehingga ia jadi COMPLETED.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</div>
 
@@ -76,7 +80,7 @@
 	<div class="row row-cols-2 row-cols-md-2 row-cols-lg-4 mb-3">
 
 		<div class="col mb-3">
-			<div class="h-100 card bg-warning text-dark text-center shadow-sm border border-dark border-1 rounded-3">
+			<div class="h-100 card bg-warning text-dark text-center shadow rounded-5">
 				<div class="card-body">
 					<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="my-3 bi bi-arrow-repeat" viewBox="0 0 16 16">
 						<path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
@@ -89,7 +93,7 @@
 		</div>
 
 		<div class="col mb-3">
-			<div class="h-100 card bg-warning text-dark text-center shadow-sm border border-dark border-1 rounded-3">
+			<div class="h-100 card bg-warning text-dark text-center shadow rounded-5">
 				<div class="card-body">
 					<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="my-3 bi bi-exclamation-diamond-fill" viewBox="0 0 16 16">
 						<path d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
@@ -101,7 +105,7 @@
 		</div>
 
 		<div class="col mb-3">
-			<div class="h-100 card bg-warning text-dark text-center shadow-sm border border-dark border-1 rounded-3">
+			<div class="h-100 card bg-warning text-dark text-center shadow rounded-5">
 				<div class="card-body">
 					<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="my-3 bi bi-graph-up" viewBox="0 0 16 16">
 						<path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5z"/>
@@ -113,7 +117,7 @@
 		</div>
 
 		<div class="col mb-3">
-			<div class="h-100 card bg-warning text-dark text-center shadow-sm border border-dark border-1 rounded-3">
+			<div class="h-100 card bg-warning text-dark text-center shadow rounded-5">
 				<div class="card-body">
 					<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="my-3 bi bi-cash-stack" viewBox="0 0 16 16">
 						<path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>

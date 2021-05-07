@@ -1,18 +1,18 @@
-<section class="text-center py-5 container-fluid bg-light bg-gradient">
-  <h1 class="h1 fw-bold">TokeyFollower</h1>
-  <p class="lead">Pengalaman menggunakan servis follower yang terbaik anda akan alami!</p>
+<section class="text-center py-5 container-fluid bg-primary-darker bg-gradient">
+  <h1 class="h1 fw-bolder ff-rubik"><span class="text-primary">Tokey</span><span class="text-secondary">Follower</span></h1>
+  <p class="text-light">Pengalaman menggunakan servis follower yang terbaik anda akan alami!</p>
 </section>
 
-<section class="bg-main">
+<section style="background: url('https://cdn.mypanel.link/af5a5a/n51faabya3rauezq.jpg') no-repeat center;">
   <div class="container py-5">
     <div class="row">
       <div class="col-md-7">
-        <div class="my-5 py-4">
-          <div class="mb-5">
-            <h1 class="text-light mb-1">MALAYSIA FOLLOWER 100% DISINI</h1>
-            <h2 class="text-light mb-4">Daftar Sekarang Untuk Dapatkan Bonus!</h2>
+        <div class="my-md-3 my-lg-5 py-md-2 py-lg-4">
+          <div class="mb-3 mb-md-4">
+            <h1 class="text-yellow mb-1 fw-bold"><u class="text-light">MALAYSIA</u><br class="d-sm-none"> FOLLOWER 100%</h1>
+            <h3 class="text-light">Daftar Sekarang Untuk Dapatkan Bonus!</h3>
           </div>
-          <a class="btn btn-primary btn-lg rounded-pill" href="www.tokeyfollower.com/signup"><h4 class="my-3 mx-4 text-dark">JOIN NOW</h4></a>
+          <a class="btn btn-primary btn-md-lg rounded-5" href="/signup"><h3 class="my-1 mx-2 my-md-2 mx-md-3 text-light fw-bold">DAFTAR <i class="bi bi-box-arrow-in-right"></i></h3></a>
         </div>
       </div>
     </div>
@@ -43,46 +43,47 @@
       <input type="hidden" name="_csrf" value="{{csrftoken}}">
 
       <div class="row g-4 mb-3">
-        <div class="col-md-5">
+        <div class="col-md-4 col-lg-5">
           <div class="form-floating">
             <input name="LoginForm[username]" type="text" class="form-control" id="floatingInput" placeholder="username">
-            <label for="floatingInput">{{ lang('signup.username') }} Username</label>
+            <label for="floatingInput">Username</label>
           </div>
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-4 col-lg-5">
           <div class="form-floating">
             <input name="LoginForm[password]" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">{{lang('signup.password')}} Password</label>
+            <label for="floatingPassword">Kata Laluan</label>
           </div>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-4 col-lg-2">
           <div class="d-grid h-100">
-            <button type="submit" class="btn btn-primary h-100">{{ lang('signin.button') }}Log Masuk</button>
+            <button type="submit" class="btn btn-primary h-100 text-light">{{ lang('signin.button') }} <i class="bi bi-check2-circle"></i></button>
           </div>
         </div>
       </div>
 
       <div class="row mb-3">
         <div class="col-md-5">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox"  name="LoginForm[remember]" value="1" id="remember">{{lang('signin.remember_me')}} Remember me
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox"  name="LoginForm[remember]" value="1" id="remember">
+            <label class="form-check-label" for="flexCheckDefault">
+              {{lang('signin.remember_me')}}
             </label>
           </div>
         </div>
 
         <div class="col-md-5">
           {% if site['resetPassword'] %}
-          <a href="{{ page_url('resetpassword') }}" class="forgot-password">{{ lang('signin.reset_password') }} Reset</a>
+          <a href="{{ page_url('resetpassword') }}" class="forgot-password">{{ lang('signin.reset_password') }}</a>
           {% endif %}
         </div>
       </div>
 
       <div class="mb-3">
         {% if registration %}
-        <span>{{ lang('signin.text') }}No account? <a class="text-decoration-none" href="{{ page_url('signup') }}">{{ lang('signup.title') }}Register now</a></span>
+        <span>{{ lang('signin.text') }} <a class="text-decoration-none" href="{{ page_url('signup') }}">{{ lang('signup.title') }}</a></span>
         {% endif %}
       </div>
 

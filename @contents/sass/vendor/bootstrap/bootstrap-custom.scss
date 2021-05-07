@@ -1,0 +1,58 @@
+// Create your own map
+$custom-colors: (
+  // "primary": #1a5aae,
+  "primary": #1671ae,
+  "secondary": #FFC800
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+// $font-size-base: 0.95rem;
+
+
+// Create your own map
+$custom-breakpoints: (
+  xsm: 300px
+);
+$grid-breakpoints: (
+  xs: 0,
+  xxsm: 300px,
+  xsm: 400px,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+$spacers: (
+  0: 0,
+  1: $spacer / 4,
+  2: $spacer / 2,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+  6: $spacer * 6,
+  7: $spacer * 12,
+);
+
+$nav-link-padding-y:                .25rem !default;
+
+.bg-primary-darker { background-color: #162c51 !important; }
+.bg-primary-lighter { background-color: #EBF3FA !important; }
+.bg-light-tinted { background-color: #F3F1F1 !important; }
+
+.text-yellow {
+  color: #FFC800 !important;
+}
+
+.rounded-10 {
+  border-radius: 1rem !important;
+}
+
+// $font-family-sans-serif: 'Inter', sans-serif;
+$font-family-sans-serif: 'Rubik', sans-serif;
+.ff-rubik {
+  font-family: 'Russo One', sans-serif;
+}

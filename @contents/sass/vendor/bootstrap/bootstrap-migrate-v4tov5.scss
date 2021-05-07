@@ -1,0 +1,17 @@
+// Extends
+.hidden {
+  @extend .d-none;
+}
+
+.form-group {
+  @extend .mb-3;
+}
+
+.btn-big-secondary {
+  @extend .btn-outline-dark;
+}
+
+.badge {
+  @extend .bg-secondary;
+  @extend .text-dark;
+}

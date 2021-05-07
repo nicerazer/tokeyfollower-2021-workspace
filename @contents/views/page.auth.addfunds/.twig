@@ -1,0 +1,219 @@
+<div class="container py-4 mb-3">
+
+  <h1 class="mb-3 display-5">
+    <i class="bi bi-wallet2"></i>
+    <span class="fw-bold">Topup</span>
+    <small class="text-muted display-6 fw-bold">Baki Akaun</small>
+  </h1>
+
+  <div class="card mb-3 bg-primary-lighter">
+    <div class="card-body">
+      <i class="bi bi-bookmark-star-fill"></i> TOP UP MINIMUM RM20 <i class="bi bi-bookmark-star-fill"></i> JIKA ANDA TOP UP RM30 DAPAT BONUS 2.5% <i class="bi bi-bookmark-star-fill"></i> Harga SERVICE semakin murah. Tiada cas untuk payment online atau manual.. Free for all!. KENAPA NAK TPOP UP RM20 , KALAU TOP UP RM30 DAPAT BONUS.
+    </div>
+  </div>
+
+  <div class="row g-2 g-md-4">
+    <div class="col-12 col-md-4">
+      <div class="card mb-3 bg-light border-0 shadow">
+        <div class="card-body text-dark d-flex align-items-center px-4 py-5 py-lg-3">
+          <span class="text-center text-lg-start d-flex flex-column w-100">
+            <div>
+              <span class="d-block d-lg-inline text-muted">
+                <i class="display-2 d-lg-none bi bi-person-circle"></i>
+                <i class="fs-2 d-none d-lg-inline bi bi-person-circle"></i>
+              </span>
+              <span class="d-none d-lg-inline">&nbsp;&nbsp;</span>
+              <span class="fw-bold fs-1 text-muted">{{ user['username'] }}</span>
+            </div>
+            <div class="fw-light">Selamat Kembali!</div>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-8">
+      <div class="row row-cols-1 row-cols-lg-3 g-0 g-lg-3">
+        <div class="col">
+          <div class="card mb-3 bg-primary">
+            <div class="card-body text-light d-flex align-items-center">
+              <span class="ms-2 me-4">
+                <i class="bi bi-wallet2"></i>
+              </span>
+              <span class="d-flex flex-column">
+                <div class="fw-light">Baki Akaun</div>
+                <div
+                  class="fw-bold fs-4"
+                  data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on left"
+                >
+                  {{ user['balance'] }}RM 1
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card mb-3 bg-primary">
+            <div class="card-body text-light d-flex align-items-center">
+              <span class="ms-2 me-4">
+                <i class="bi bi-receipt"></i>
+              </span>
+              <span class="d-flex flex-column">
+                <div class="fw-light">Jumlah Dihabiskan</div>
+                <div class="fw-bold fs-4">RM{{ user['spent'] }}</div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card mb-3 bg-primary">
+            <div class="card-body text-light d-flex align-items-center">
+              <span class="ms-2 me-4">
+                <i class="bi bi-bell"></i>
+              </span>
+              <span class="d-flex flex-column">
+                <div class="fw-light">Status Akaun</div>
+                <div class="fw-bold fs-4">VIP</div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {% if paymentsList %}
+  <form method="post" action="">
+    {% if success %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle"></i>&nbsp;
+      {{ successText }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% if error %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <i class="bi bi-exclamation-circle"></i>&nbsp;
+      {{ errorText }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    <div class="row g-3 mb-3">
+
+      <div class="col-12 col-sm-7 col-md-9">
+        <label class="form-label" for="method">{{ lang('addfunds.method') }}</label>
+        <select class="form-control" id="method" name="AddFoundsForm[type]" id="order_type">
+          {% for payment in paymentsList %}
+            <option value="{{ payment['id'] }}" {% if currentPayment == payment['id'] %}selected{% endif %}>{{ payment['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-12 col-sm-5 col-md-3">
+        <label class="form-label" for="amount">{{ lang('addfunds.amount') }}</label>
+        <div class="input-group">
+          <span class="input-group-text">RM</span>
+          <input placeholder="Masukkan amaun topup" type="number" class="form-control" name="AddFoundsForm[amount]" id="amount">
+        </div>
+      </div>
+
+    </div>
+
+    {% if site['cpf_field'] %}
+    <div class="mb-3">
+      <label class="form-lable" for="cpf">{{ lang('addfunds.cpf') }}</label>
+      <input type="text" class="form-control"  name="AddFoundsForm[cpf]" id="cpf">
+    </div>
+    {% endif %}
+
+    <input type="hidden" name="_csrf" value="{{ csrftoken }}">
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary btn-lg">{{ lang('addfunds.button') }}&nbsp;&nbsp;<i class="bi bi-credit-card"></i></button>
+    </div>
+
+  </form>
+  {% endif %}
+
+  {% if paymentList %}
+
+    <div class="table-responsive rounded-5">
+      <table class="table table-striped">
+        <thead class="table-primary">
+          <tr>
+            <th>{{ lang('addfunds.id') }}</th>
+            <th>{{ lang('addfunds.date') }}</th>
+            <th>{{ lang('addfunds.method') }}</th>
+            <th>{{ lang('addfunds.amount') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for payment in paymentList %}
+          <tr>
+            <td>{{ payment['id'] }}</td>
+            <td><span class="nowrap">{{ payment['date'] }}</span></td>
+            <td>{{ payment['method'] }}</td>
+            <td>
+              {% if payment['original_amount'] %}
+                <span data-toggle="tooltip" data-placement="left" title="{{ payment['original_amount'] }}&nbsp;{{ payment['original_currency'] }}">≈ {{ payment['amount'] }}</span>
+              {% else %}
+                {{ payment['amount'] }}
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% if pagination['count'] > 50 %}
+    <div class="nav-pills">
+      <ul class="pagination {% if site['rtl'] %} rtl-pagination {% endif %}">
+        {% if pagination['current'] != 1 %}
+          <li>
+            <a href="{{ page['url'] }}/{{ pagination['last'] }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        {% endif %}
+
+        {% set r, l = 3, 3 %}
+
+        {% if pagination['current'] == 1 %}
+          {% set r = 6 %}
+        {% endif %}
+
+        {% if pagination['current'] == 2 %}
+          {% set r = 5 %}
+        {% endif %}
+
+        {% if pagination['current'] >= pagination['pages'] %}
+          {% set l = 5 %}
+        {% endif %}
+
+        {% for i in 1..ceil(pagination['pages']) %}
+          {% if i >= (pagination['current']-l) and i <= (pagination['current']+r) %}
+            <li{% if i == pagination['current'] %} class="active"{% endif %}><a href="{{ page['url'] }}/{{i}}">{{i}}</a></li>
+          {% endif %}
+        {% endfor %}
+
+        {% if pagination['current'] < pagination['pages'] %}
+          <li>
+            <a href="{{ page['url'] }}/{{ pagination['next'] }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+    {% endif %}
+
+  {% endif %}
+</div>
+
+<div class="bg-light-tinted py-4">
+  <div class="container-md">  
+    {% if addfunds %}
+    {{ addfundsText }}
+    {% endif %}
+  </div>
+</div>

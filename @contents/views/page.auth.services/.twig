@@ -1,0 +1,87 @@
+<section class="container my-3 my-md-5">
+
+  <div class="row align-items-center mb-0 mb-xsm-2">
+    <div class="col-12 col-sm-4">
+      <div class="mb-0 mb-xsm-2">
+        <h1 class="mb-1 text-muted">
+          <i class="bi bi-tags"></i>
+          <span>Harga Servis</span>
+          </h1>
+        <h6 class="text-primary d-none d-sm-block">@TokeyFollower</h6>
+      </div>
+    </div>
+    <hr class="d-block d-sm-none">
+    <div class="col-12 col-sm-6 border-start d-none d-xsm-block">
+      <span class="lead fs-6 d-inline-block d-md-none"> Kami sediakan servis yang berbagai. Lihat dan bandingkan mana servis apa yang anda mahu pilih.</span>
+      <span class="lead fs-5 d-none d-md-inline-block"> Kami sediakan servis yang berbagai. Lihat dan bandingkan mana servis apa yang anda mahu pilih.</span>
+    </div>
+  </div>
+
+  <div class="table-responsive rounded-5">
+    <table class="table table-striped">
+      <thead class="table-primary">
+        <tr>
+          <th>{{ lang('services.id') }}ID</th>
+          <th class="width-service-name">{{ lang('services.name') }}</th>
+          <th class="text-nowrap">{{ lang('services.rate') }}</th>
+          <th class="text-nowrap">{{ lang('services.min') }}</th>
+          <th class="text-nowrap">{{ lang('services.max') }}</th>
+          {% if site['average_time'] %}
+          <th class="text-nowrap">{{ lang('services.average_time') }}
+            <span class="bi bi-exclamation-circle" data-toggle="tooltip" data-placement="top" title="{{ lang('services.average_time.description') }}"></span>
+          </th>
+          {% endif %}
+          {% if serviceDescription %}
+          <th class="d-none d-xl-table-cell service-description__th">{{ lang('services.description') }}</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for category in serviceCategoryList %}
+          {% if category['name'] %}
+          <tr>
+            <td colspan="6"><strong>{{ category['name'] }}</strong></td>
+          </tr>
+          {% endif %}
+          {% for service in category['services'] %}
+          <tr>
+            <td>{{ service['id'] }}</td>
+            <td class="service-name">{{ service['name'] }}</td>
+            <td>{{ service['rate'] }}</td>
+            <td>{{ service['min'] }}</td>
+            <td>{{ service['max'] }}</td>
+            {% if site['average_time'] %}
+            <td class="text-nowrap">{{ service['average_time'] }}</td>
+            {% endif %}
+            {% if serviceDescription %}
+            <td class="d-none d-xl-table-cell service-description text-muted">{{service['description']}}</td>
+          </tr>
+          <tr>
+            <td class="d-table-cell d-xl-none service-description tf-services-description" colspan="6">
+              <div class="d-grid">
+                <a class="btn d-inline-flex align-items-center rounded"
+                  data-bs-toggle="collapse"
+                  href="#collapseServicesDescription{{ loop.parent.loop.index }}-{{ loop.index }}"
+                  role="button" aria-expanded="false"
+                  aria-controls="collapseServicesDescription{{ loop.parent.loop.index }}-{{ loop.index }}"
+                >
+                  <span class="text-muted fw-bold">
+                    Description
+                  </span>
+                </a>
+              </div>
+              <div class="mt-1 collapse text-muted" id="collapseServicesDescription{{ loop.parent.loop.index }}-{{ loop.index }}">{{service['description']}}</div>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        {% endfor%}
+      </tbody>
+    </table>
+  </div>
+
+</section>
+
+{% if servicesText %}
+{{ servicesText }}
+{% endif %}

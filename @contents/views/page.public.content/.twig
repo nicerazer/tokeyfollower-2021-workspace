@@ -1,0 +1,14 @@
+{% if content %}
+  {% if not user['auth'] %}
+  <section class="bg-light bg-gradient py-4 text-center">
+    <div class="container-fluid">
+      <h1 class="display-6 fw-bold">Masih Belum Daftar?</h1>
+      <div class="d-flex flex-column align-items-center justify-content-center">
+        <p>Register Secara Percuma!</p>
+        <a href="#" class="btn btn-outline-primary btn-sm rounded-5">Daftar Sekarang</a>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+  {{ contentText }}
+{% endif %}

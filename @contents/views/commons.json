@@ -1,16 +1,18 @@
 {
   "site": {
+    "logo": "logo-compatible.png",
     "language": "eng",
     "seo_key": "",
     "seo_desc": "",
     "favicon": "#",
     "custom_header": "",
-    "logo": "tf-wide.png",
-    "name": "TokeyFollower",
+    "name": "TF",
     "menu": [
-      {"active": true, "link": "#", "name":"Menu1"},
-      {"active": false, "link": "#", "name":"Menu2"},
-      {"active": false, "link": "#", "name":"Menu3"}
+      {"active": true, "link": "#", "name":"SIGNIN", "icon": "bi bi-house-door"},
+      {"active": false, "link": "#", "name":"SIGNUP", "icon": "bi bi-person-plus"},
+      {"active": false, "link": "#", "name":"HARGA", "icon": "bi bi-tags"},
+      {"active": false, "link": "#", "name":"TERMA", "icon": "bi bi-receipt-cutoff"},
+      {"active": false, "link": "#", "name":"TUTORIAL", "icon": "bi bi-info-circle"}
     ],
     "account_menu": [
       {"active": true, "link": "#", "name":"Menu1"},
@@ -23,13 +25,13 @@
       { "href": "app.min.css" }
     ],
     "scripts": [
-      {"src": "app.min.js"},
       {"src": "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"},
       {"code": "var varFromCommonsJson = 'Hi!';"}
     ],
     "average_time": true
   },
   "user": {
+    "auth": true,
     "balance": 20,
     "username": "IqbalZZ"
   },

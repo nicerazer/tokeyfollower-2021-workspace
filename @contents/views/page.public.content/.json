@@ -1,0 +1,7 @@
+{
+  "status" : "all",
+  "user": {
+    "auth": false
+  },
+  "content": true
+}

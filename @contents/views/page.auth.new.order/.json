@@ -3,7 +3,7 @@
     "auth": false
   },
   "check_agreement": true,
-  "error": true,
+  "error": false,
   "errorMessage": "Error in processing stuff! Please Try Again",
   "newOrderText": true
 }

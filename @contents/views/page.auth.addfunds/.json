@@ -1,0 +1,14 @@
+{
+  "user": {
+    "auth": false
+  },
+  "success": false,
+  "successText": "OHAYO SEKAI GOOD MORNING WORLD",
+  "addfunds": true,
+  "paymentsList": [
+    {
+      "id": "13", 
+      "name": "YES"
+    }
+  ]
+}

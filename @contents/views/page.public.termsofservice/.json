@@ -1,0 +1,9 @@
+{
+  "user": {
+    "auth": false
+  },
+  "termsofservice": true,
+  "error": true,
+  "success": true,
+  "registration": true
+}
