@@ -1,190 +1,190 @@
 <!DOCTYPE html>
 <html lang="{{site['language']}}">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ page['title'] }}</title>
-  <meta name="keywords" content="{{ site['seo_key'] }}">
-  <meta name="description" content="{{ site['seo_desc'] }}">
-  {% if site['favicon'] %}
-  <link rel="shortcut icon" type="image/ico" href="{{ site['favicon'] }}" />
-  {% endif %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page['title'] }}</title>
+    <meta name="keywords" content="{{ site['seo_key'] }}">
+    <meta name="description" content="{{ site['seo_desc'] }}">
+    {% if site['favicon'] %}
+    <link rel="shortcut icon" type="image/ico" href="{{ site['favicon'] }}" />
+    {% endif %}
 
-  {{ site['custom_header'] }}
+    {{ site['custom_header'] }}
 
-  {% for style in site['styles'] %}
-  <link rel="stylesheet" type="text/css" href="{{ style['href'] }}">    
-  {% endfor %}
+    {% for style in site['styles'] %}
+    <link rel="stylesheet" type="text/css" href="{{ style['href'] }}">    
+    {% endfor %}
 </head>
 <body>
 
 {% if user['auth'] %}
 <nav class="navbar navbar-dark bg-primary shadow">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{{ page_url('index') }}">
-      {% if site['logo'] %}
-        <img src="{{ site['logo'] }}" alt="{{ site['name'] }}" title="{{ site['name'] }}" width="80" height="33" class="d-inline-block align-middle">
-      {% else %}
-        {{ site['name'] }}
-      {% endif %}
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAppNavBar" aria-controls="navbarTogglerAppNavBar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div id="navbarTogglerAppNavBar" class="collapse navbar-collapse">
-      <hr>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        {% for menu in site['menu'] %}
-        <li class="nav-item mx-1">
-          <a
-            {% if menu['active'] %} class="nav-link active" aria-current="page" {% else %} class="nav-link" {% endif %}
-            href="{{ menu['link'] }}"
-            {% if menu['external'] %} target="_blank" {% endif %}
-          >
-            {% if menu['icon'] %}
-            <i class="{{ menu['icon'] }}"></i>&nbsp;
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ page_url('index') }}">
+            {% if site['logo'] %}
+                <img src="{{ site['logo'] }}" alt="{{ site['name'] }}" title="{{ site['name'] }}" width="80" height="33" class="d-inline-block align-middle">
             {% else %}
-            <i class="bi bi-hash"></i>&nbsp;
+                {{ site['name'] }}
             {% endif %}
-            <span class="text-uppercase">{{ menu['name'] }}</span>
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
-      <hr>
-      <ul class="navbar-nav mb-2 mb-lg-0">
-        {% for menu in site['account_menu'] %}
-        <li class="nav-item mx-1">
-          <a
-            {% if menu['active'] %} class="nav-link active" aria-current="page" {% else %} class="nav-link" {% endif %}
-            href="{{ menu['link'] }}"
-            {% if menu['external'] %} target="_blank" {% endif %}
-          >
-            {% if menu['icon'] %}
-            <i class="{{ menu['icon'] }}"></i>&nbsp;
-            {% else %}
-            <i class="bi bi-hash"></i>&nbsp;
-            {% endif %}
-            <span class="text-uppercase">{{ menu['name'] }}</span>
-          </a>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAppNavBar" aria-controls="navbarTogglerAppNavBar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarTogglerAppNavBar" class="collapse navbar-collapse">
+            <hr>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% for menu in site['menu'] %}
+                <li class="nav-item mx-1">
+                    <a
+                        {% if menu['active'] %} class="nav-link active" aria-current="page" {% else %} class="nav-link" {% endif %}
+                        href="{{ menu['link'] }}"
+                        {% if menu['external'] %} target="_blank" {% endif %}
+                    >
+                        {% if menu['icon'] %}
+                        <i class="{{ menu['icon'] }}"></i>&nbsp;
+                        {% else %}
+                        <i class="bi bi-hash"></i>&nbsp;
+                        {% endif %}
+                        <span class="text-uppercase">{{ menu['name'] }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            <hr>
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                {% for menu in site['account_menu'] %}
+                <li class="nav-item mx-1">
+                    <a
+                        {% if menu['active'] %} class="nav-link active" aria-current="page" {% else %} class="nav-link" {% endif %}
+                        href="{{ menu['link'] }}"
+                        {% if menu['external'] %} target="_blank" {% endif %}
+                    >
+                        {% if menu['icon'] %}
+                        <i class="{{ menu['icon'] }}"></i>&nbsp;
+                        {% else %}
+                        <i class="bi bi-hash"></i>&nbsp;
+                        {% endif %}
+                        <span class="text-uppercase">{{ menu['name'] }}</span>
+                    </a>
 
-        </li>
-        {% endfor %}
-      </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
 {% else %}
 <nav class="navbar navbar-tf-main navbar-expand-lg bg-light shadow">
-  <div class="container">
-    <a class="navbar-brand mx-sm-3 mx-lg-0" href="{{ page_url('index') }}">
-      {% if site['logo'] %}
-        <img src="{{ site['logo'] }}" alt="{{ site['name'] }}" title="{{ site['name'] }}" width="120" height="49" class="d-inline-block align-middle">
-      {% else %}
-        {{ site['name'] }}
-      {% endif %}
-    </a>
-    <button class="navbar-toggler mx-sm-3 mx-lg-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAppNavBar" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div id="navbarTogglerAppNavBar" class="collapse navbar-collapse mx-sm-3 mx-lg-4 mt-4 mb-1 mt-lg-0 mb-lg-0">
-      <ul class="navbar-nav mb-2 mb-lg-0">
-        {% for menu in site['menu'] %}
-        <li class="nav-item mx-2 mb-3 my-lg-0">
-          <a
-            {% if menu['active'] %} class="nav-link active" aria-current="page" {% else %} class="nav-link" {% endif %}
-            href="{{ menu['link'] }}"
-            {% if menu['external'] %} target="_blank" {% endif %}
-          >
-            {% if menu['icon'] %}
-            <i class="{{ menu['icon'] }}"></i>&nbsp;
+    <div class="container">
+        <a class="navbar-brand mx-sm-3 mx-lg-0" href="{{ page_url('index') }}">
+            {% if site['logo'] %}
+                <img src="{{ site['logo'] }}" alt="{{ site['name'] }}" title="{{ site['name'] }}" width="120" height="49" class="d-inline-block align-middle">
             {% else %}
-            <i class="bi bi-hash"></i>&nbsp;
+                {{ site['name'] }}
             {% endif %}
-            <span class="nav-item-stylish{% if not menu['active'] %} nav-item-hoverable{% endif %}" data-hover="{{ menu['name'] }}">
-              {{ menu['name'] }}
-            </span>
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
+        </a>
+        <button class="navbar-toggler mx-sm-3 mx-lg-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAppNavBar" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="navbarTogglerAppNavBar" class="collapse navbar-collapse mx-sm-3 mx-lg-4 mt-4 mb-1 mt-lg-0 mb-lg-0">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                {% for menu in site['menu'] %}
+                <li class="nav-item mx-2 mb-3 my-lg-0">
+                    <a
+                        {% if menu['active'] %} class="nav-link active" aria-current="page" {% else %} class="nav-link" {% endif %}
+                        href="{{ menu['link'] }}"
+                        {% if menu['external'] %} target="_blank" {% endif %}
+                    >
+                        {% if menu['icon'] %}
+                        <i class="{{ menu['icon'] }}"></i>&nbsp;
+                        {% else %}
+                        <i class="bi bi-hash"></i>&nbsp;
+                        {% endif %}
+                        <span class="nav-item-stylish{% if not menu['active'] %} nav-item-hoverable{% endif %}" data-hover="{{ menu['name'] }}">
+                            {{ menu['name'] }}
+                        </span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
 {% endif %}
 
 <!-- Main variables *content* -->
 <div class="min-vh-100">
-  {{ content }}
+    {{ content }}
 </div>
 
 {{ site['custom_footer'] }}
 
 <footer class="bg-primary-darker">
-  <div class="container py-4 py-md-5">
-    <div class="row row-cols-1 row-cols-md-3">
-      <div class="col my-3">
-        <img src="https://cdn.mypanel.link/af5a5a/dnapk39ho2ehixtc.png" alt="Logo supposed to be here..." class="img-fluid mb-4">
-        <div class="d-flex flex-row mb-3 gap-2">
-          <a href="mailto:tokeyfollower11@gmail.com" target="_blank" class="btn btn-outline-light rounded-circle text-center d-inline-block fs-6" style="width:40px; height:40px; padding: 8px;">
-            <i class="bi bi-envelope"></i>
-          </a>
-          <a href="https://twitter.com/tokeyfollower" target="_blank" class="btn btn-outline-light rounded-circle text-center d-inline-block fs-6" style="width:40px; height:40px; padding: 8px;">
-            <i class="bi bi-twitter"></i>
-          </a>
-          <a href="https://www.instagram.com/belajar_berniaga_follower/" target="_blank" class="btn btn-outline-light rounded-circle text-center d-inline-block fs-6" style="width:40px; height:40px; padding: 8px;">
-            <i class="bi bi-instagram"></i>
-          </a>
-          <a href="http://wasap.my/60189133685" target="_blank" class="btn btn-outline-light rounded-circle text-center d-inline-block fs-6" style="width:40px; height:40px; padding: 8px;">
-            <i class="bi bi-whatsapp"></i>
-          </a>
-        </div>
-        <h3 class="ff-rubik text-light">FOLLOW KAMI</h3>
-      </div>
-      <hr class="bg-light d-md-none">
-      <div class="col my-3">
-        <h3 class="ff-rubik text-light mb-4">SERVIS KAMI</h3>
-        <ul class="list-unstyled text-light">
-          <li class="w-100">
-            <a href="http://wasap.my/60189133685" target="_blank" class="btn btn-outline-light border-0 btn-sm px-0 mb-1 rounded-3 text-start w-100"><i class="bi bi-chevron-right"></i> Hubungi Kami</a>
-          </li>
-          <li class="w-100">
-            <a href="/signup" class="btn btn-outline-light border-0 btn-sm px-0 mb-1 rounded-3 text-start w-100"><i class="bi bi-chevron-right"></i> Daftar Akaun</a>
-          </li>
-          <li class="w-100">
-            <a href="/faq" class="btn btn-outline-light border-0 btn-sm px-0 mb-1 rounded-3 text-start w-100"><i class="bi bi-chevron-right"></i> Tutorial Sistem</a>
-          </li>
-          <li class="w-100">
-            <a href="/terms" class="btn btn-outline-light border-0 btn-sm px-0 mb-1 rounded-3 text-start w-100"><i class="bi bi-chevron-right"></i> Terma & Syarat</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col my-3">
-        <h3 class="ff-rubik text-light mb-4">KAMI TERIMA</h3>
-        <div class="container-fluid g-0">
-          <div class="row g-0">
-            <div class="col-6">
-              <img src="https://cdn.mypanel.link/af5a5a/qwp1iynntaci5uf2.png" alt="Logo supposed to be here..." class="img-fluid">
+    <div class="container py-4 py-md-5">
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col my-3">
+                <img src="https://cdn.mypanel.link/af5a5a/dnapk39ho2ehixtc.png" alt="Logo supposed to be here..." class="img-fluid mb-4">
+                <div class="d-flex flex-row mb-3 gap-2">
+                    <a href="mailto:tokeyfollower11@gmail.com" target="_blank" class="btn btn-outline-light rounded-circle text-center d-inline-block fs-6" style="width:40px; height:40px; padding: 8px;">
+                        <i class="bi bi-envelope"></i>
+                    </a>
+                    <a href="https://twitter.com/tokeyfollower" target="_blank" class="btn btn-outline-light rounded-circle text-center d-inline-block fs-6" style="width:40px; height:40px; padding: 8px;">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com/belajar_berniaga_follower/" target="_blank" class="btn btn-outline-light rounded-circle text-center d-inline-block fs-6" style="width:40px; height:40px; padding: 8px;">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="http://wasap.my/60189133685" target="_blank" class="btn btn-outline-light rounded-circle text-center d-inline-block fs-6" style="width:40px; height:40px; padding: 8px;">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
+                </div>
+                <h3 class="ff-rubik text-light">FOLLOW KAMI</h3>
             </div>
-          </div>
+            <hr class="bg-light d-md-none">
+            <div class="col my-3">
+                <h3 class="ff-rubik text-light mb-4">SERVIS KAMI</h3>
+                <ul class="list-unstyled text-light">
+                    <li class="w-100">
+                        <a href="http://wasap.my/60189133685" target="_blank" class="btn btn-outline-light border-0 btn-sm px-0 mb-1 rounded-3 text-start w-100"><i class="bi bi-chevron-right"></i> Hubungi Kami</a>
+                    </li>
+                    <li class="w-100">
+                        <a href="/signup" class="btn btn-outline-light border-0 btn-sm px-0 mb-1 rounded-3 text-start w-100"><i class="bi bi-chevron-right"></i> Daftar Akaun</a>
+                    </li>
+                    <li class="w-100">
+                        <a href="/faq" class="btn btn-outline-light border-0 btn-sm px-0 mb-1 rounded-3 text-start w-100"><i class="bi bi-chevron-right"></i> Tutorial Sistem</a>
+                    </li>
+                    <li class="w-100">
+                        <a href="/terms" class="btn btn-outline-light border-0 btn-sm px-0 mb-1 rounded-3 text-start w-100"><i class="bi bi-chevron-right"></i> Terma & Syarat</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col my-3">
+                <h3 class="ff-rubik text-light mb-4">KAMI TERIMA</h3>
+                <div class="container-fluid g-0">
+                    <div class="row g-0">
+                        <div class="col-6">
+                            <img src="https://cdn.mypanel.link/af5a5a/qwp1iynntaci5uf2.png" alt="Logo supposed to be here..." class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <hr class="bg-light">
-  <div class="container py-5 text-center text-light">
-    <p>@ 2021 TokeyFollower</p>
-    <p>created by <span class="fw-bold">TokeyFollower Team</span></p>
-  </div>
+    <hr class="bg-light">
+    <div class="container py-5 text-center text-light">
+        <p>@ 2021 TokeyFollower</p>
+        <p>created by <span class="fw-bold">TokeyFollower Team</span></p>
+    </div>
 </footer>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
 
 {% for script in site['scripts'] %}
 <script type="text/javascript" {% if script['src'] %}src="{{ script['src'] }}"{% endif %}>
-  {% if script['code'] %} {{ script['code'] }} {% endif %}
+    {% if script['code'] %} {{ script['code'] }} {% endif %}
 </script>
 {% endfor %}
 
@@ -196,24 +196,24 @@
 // Updates iFrame on show
 var youtubeModal = document.getElementById('youtubeModal');
 youtubeModal.addEventListener('show.bs.modal', function (event) {
-  // Button that triggered the modal
-  var button = event.relatedTarget;
-  // Extract info from data-bs-* attributes
-  var youtubeLink = button.getAttribute('data-bs-youtube-link');
-  // If necessary, you could initiate an AJAX request here
-  // and then do the updating in a callback.
-  //
-  // Update the modal's content.
-  var modalTitle = youtubeModal.querySelector('.modal-title');
-  var modalBodyInput = youtubeModal.querySelector('.modal-body div iframe');
+    // Button that triggered the modal
+    var button = event.relatedTarget;
+    // Extract info from data-bs-* attributes
+    var youtubeLink = button.getAttribute('data-bs-youtube-link');
+    // If necessary, you could initiate an AJAX request here
+    // and then do the updating in a callback.
+    //
+    // Update the modal's content.
+    var modalTitle = youtubeModal.querySelector('.modal-title');
+    var modalBodyInput = youtubeModal.querySelector('.modal-body div iframe');
 
-  modalTitle.textContent = 'Tutorial';
-  modalBodyInput.src = youtubeLink;
+    modalTitle.textContent = 'Tutorial';
+    modalBodyInput.src = youtubeLink;
 });
 
 // Resets Modal On Hide
 $("#youtubeModal").on('hidden.bs.modal', function (e) {
-  $("#youtubeModal div iframe").attr("src", $("#youtubeModal div iframe").attr("src"));
+    $("#youtubeModal div iframe").attr("src", $("#youtubeModal div iframe").attr("src"));
 });
 
 /* -----------------------
@@ -221,7 +221,7 @@ $("#youtubeModal").on('hidden.bs.modal', function (e) {
 ----------------------- */
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
+    return new bootstrap.Tooltip(tooltipTriggerEl)
 })
 
 </script>
