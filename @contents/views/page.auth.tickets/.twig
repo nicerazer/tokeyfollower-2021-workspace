@@ -1,0 +1,120 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="well">
+        <form {% if site['rtl'] %}class="rtl-form"{% endif %} method="post" action="" id="ticketsend">
+            <div class="alert alert-dismissible alert-danger ticket-danger {% if site['rtl'] %} rtl-alert {% endif %}" style="display: none">
+              <button type="button" class="close">&times;</button>
+              <div></div>
+            </div>
+          <div class="form-group">
+            <label for="subject" class="control-label">{{ lang('tickets.subject') }}</label>
+            <input type="text" class="form-control" id="subject" name="TicketForm[subject]">
+          </div>
+          <div class="form-group">
+            <label for="message" class="control-label">{{ lang('tickets.message') }}</label>
+            <textarea class="form-control" rows="7" id="message" name="TicketForm[message]"></textarea>
+          </div>
+          <input type="hidden" name="_csrf" value="{{csrftoken}}">
+          <button type="submit" class="btn btn-primary">{{ lang('tickets.button') }}</button>
+        </form>
+      </div>
+      {% if ticketList or search %}
+        <div class="row">
+          <div class="col-md-4 {% if site['rtl'] == '0' %} col-md-offset-8 {% endif %}">
+            <div class="nav-pills {% if site['rtl'] %} rtl-search {% endif %}">
+              <form action="{{ page['url'] }}" method="get" id="history-search">
+                <div class="input-group">
+                  <input type="text" class="form-control" value="{{ search }}" name="search" placeholder="{{ lang('general.search.placeholder') }}">
+                  <span class="input-group-btn">
+                   <button type="submit" class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      {% if ticketList %}
+        <div class="well">
+          <table class="table {% if site['rtl'] %} rtl-table {% endif %}">
+            <thead>
+            <tr>
+              <th>{{ lang(tickets.id) }}</th>
+              <th>{{ lang('tickets.subject') }}</th>
+              <th>{{ lang('tickets.status') }}</th>
+              <th class="nowrap">{{ lang('tickets.updated') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for ticket in ticketList %}
+              <tr>
+                <td>{{ ticket['id'] }}</td>
+                {% if ticket['new'] == 1 %}
+                  <td><a href="{{ page_url('viewticket') }}/{{ ticket['id'] }}"><strong>{{ ticket['theme'] }}</strong></a></td>
+                {% else %}
+                  <td><a href="{{ page_url('viewticket') }}/{{ ticket['id'] }}">{{ticket['theme']}}</a></td>
+                {% endif %}
+                <td>{{ ticket['status'] }}</td>
+                <td><span class="nowrap">{{ ticket['time'] }}</span></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+      {% if pagination['count'] > 50 %}
+        <div class="nav-pills">
+          <ul class="pagination {% if site['rtl'] %} rtl-pagination {% endif %}">
+            {% if pagination['current'] != 1 %}
+              <li>
+                <a href="{{ page['url'] }}/{{ pagination['last'] }}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+            {% endif %}
+
+            {% set r, l = 3, 3 %}
+
+            {% if pagination['current'] == 1 %}
+              {% set r = 6 %}
+            {% endif %}
+
+            {% if pagination['current'] == 2 %}
+              {% set r = 5 %}
+            {% endif %}
+
+            {% if pagination['current'] >= pagination['pages'] %}
+              {% set l = 5 %}
+            {% endif %}
+
+            {% for i in 1..ceil(pagination['pages']) %}
+              {% if i >= (pagination['current']-l) and i <= (pagination['current']+r) %}
+                <li{% if i == pagination['current'] %} class="active"{% endif %}><a href="{{ page['url'] }}/{{i}}">{{i}}</a></li>
+              {% endif %}
+            {% endfor %}
+
+            {% if pagination['current'] < pagination['pages'] %}
+              <li>
+                <a href="{{ page['url'] }}/{{ pagination['next'] }}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% if ticketsText %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="well {% if site['rtl'] %} rtl-content {% endif %}">
+          {{ ticketsText }}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

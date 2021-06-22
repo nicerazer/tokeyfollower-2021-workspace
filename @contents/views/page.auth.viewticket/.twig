@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="well  {% if site['rtl'] %} rtl-content {% endif %}">
+        <div class="titcket-title">{{ ticket['thema'] }}</div>
+        {% if messageList %}
+          {% for message in messageList %}
+            {% if message['support'] == 0 %}
+              <div class="row ticket-message-block ticket-message-right">
+                <div class="col-md-1"></div>
+                <div class="col-md-11">
+                  <div class="ticket-message">
+                    <div class="message">{{ message['message'] }}</div>
+                  </div>
+                  <div class="info text-right">
+                    <strong>{{ message['author'] }}</strong>
+                    <small class="text-muted">{{ message['time'] }}</small>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+            {% else %}
+              <div class="row ticket-message-block ticket-message-left">
+                <div class="col-md-11">
+                  <div class="ticket-message">
+                    <div class="message">{{ message['message'] }}</div>
+                  </div>
+                  <div class="info">
+                    <strong>{{ message['author'] }}</strong>
+                    <small class="text-muted">{{ message['time'] }}</small>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% if canAddMessage %}
+          <div class="row">
+            <div class="col-md-12">
+              <form {% if site['rtl'] %} class="rtl-form"{% endif %} method="post" action="">
+                {% if error %}
+                  <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                      {{ errorMessage }}
+                  </div>
+                {% endif %}
+                <div class="form-group panel-border-top">
+                  <label for="message" class="control-label">{{ lang('tickets.message') }}</label>
+                  <textarea id="message" rows="5" class="form-control" name="TicketMessageForm[message]"></textarea>
+                </div>
+                <input type="hidden" name="_csrf" value="{{csrftoken}}">
+                <button type="submit" class="btn btn-primary">{{ lang('tickets.button.reply') }}</button>
+              </form>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
