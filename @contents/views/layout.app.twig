@@ -8,7 +8,7 @@
   <meta name="keywords" content="{{ site['seo_key'] }}">
   <meta name="description" content="{{ site['seo_desc'] }}">
   {% if site['favicon'] %}
-  <link rel="shortcut icon" type="image/ico" href="{{ site['favicon'] }}" />
+  <link rel="shortcut icon" type="image/ico" href="{{ site['favicon'] }}" />    
   {% endif %}
 
   {{ site['custom_header'] }}
@@ -75,6 +75,8 @@
     </div>
   </div>
 </nav>
+{% elseif (page['title'] == 'Sign up') %}
+<!-- Max size clear for signup -->
 {% else %}
 <nav class="navbar navbar-tf-main navbar-expand-lg bg-light shadow">
   <div class="container">
@@ -116,12 +118,13 @@
 {% endif %}
 
 <!-- Main variables *content* -->
-<div class="min-vh-100">
+<div class="{% if (page['title'] == 'Sign up') %} d-flex {% endif %} min-vh-100">
   {{ content }}
 </div>
 
 {{ site['custom_footer'] }}
 
+{% if (page['title'] != 'Sign up') %}
 <footer class="bg-primary-darker">
   <div class="container py-4 py-md-5">
     <div class="row row-cols-1 row-cols-md-3">
@@ -179,6 +182,7 @@
     <p>created by <span class="fw-bold">TokeyFollower Team</span></p>
   </div>
 </footer>
+{% endif %}
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
 
@@ -195,34 +199,28 @@
 ----------------------- */
 // Updates iFrame on show
 var youtubeModal = document.getElementById('youtubeModal');
-youtubeModal.addEventListener('show.bs.modal', function (event) {
-  // Button that triggered the modal
-  var button = event.relatedTarget;
-  // Extract info from data-bs-* attributes
-  var youtubeLink = button.getAttribute('data-bs-youtube-link');
-  // If necessary, you could initiate an AJAX request here
-  // and then do the updating in a callback.
-  //
-  // Update the modal's content.
-  var modalTitle = youtubeModal.querySelector('.modal-title');
-  var modalBodyInput = youtubeModal.querySelector('.modal-body div iframe');
+if(youtubeModal !== null) {
+  youtubeModal.addEventListener('show.bs.modal', function (event) {
+    // Button that triggered the modal
+    var button = event.relatedTarget;
+    // Extract info from data-bs-* attributes
+    var youtubeLink = button.getAttribute('data-bs-youtube-link');
+    // If necessary, you could initiate an AJAX request here
+    // and then do the updating in a callback.
+    //
+    // Update the modal's content.
+    var modalTitle = youtubeModal.querySelector('.modal-title');
+    var modalBodyInput = youtubeModal.querySelector('.modal-body div iframe');
 
-  modalTitle.textContent = 'Tutorial';
-  modalBodyInput.src = youtubeLink;
-});
+    modalTitle.textContent = 'Tutorial';
+    modalBodyInput.src = youtubeLink;
+  });
 
-// Resets Modal On Hide
-$("#youtubeModal").on('hidden.bs.modal', function (e) {
-  $("#youtubeModal div iframe").attr("src", $("#youtubeModal div iframe").attr("src"));
-});
-
-/* -----------------------
-: TOOLTIP CONFIGURATION
------------------------ */
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+  // Resets Modal On Hide
+  $("#youtubeModal").on('hidden.bs.modal', function (e) {
+    $("#youtubeModal div iframe").attr("src", $("#youtubeModal div iframe").attr("src"));
+  });
+}
 
 </script>
 

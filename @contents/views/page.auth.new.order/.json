@@ -1,6 +1,8 @@
 {
   "user": {
-    "auth": false
+    "auth": false,
+    "balance": "RM3002.72772",
+    "spent": 123.112394
   },
   "check_agreement": true,
   "error": false,

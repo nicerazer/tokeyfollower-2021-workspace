@@ -31,11 +31,11 @@
     "average_time": true
   },
   "user": {
-    "auth": true,
+    "auth": false,
     "balance": 20,
     "username": "IqbalZZ"
   },
-  "page": "title",
+  "page": {"title": "signup"},
   "1": "success",
   "order": [
     {"id": "727"},

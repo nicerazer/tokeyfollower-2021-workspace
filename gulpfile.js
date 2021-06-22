@@ -163,21 +163,22 @@ function compileJs() {
 }
 
 function fetchVendorAndCompileJs() {
-  return gulp.src([
-    './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
-    // './node_modules/jquery/dist/jquery.min.js',
-    // './@contents/js/app.js',
-  ])
+  // return gulp.src([
+  //   './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
+  //   './node_modules/jquery/dist/jquery.min.js',
+  //   './@contents/js/app.js',
+  // ])
+  return gulp.src('./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js')
   .pipe(concat('app.min.js'))
-  .pipe(minifyJs())
-  .pipe(rename({ basename: 'app', extname: '.min.js' }))
+  // .pipe(minifyJs())
+  // .pipe(rename({ basename: 'app', extname: '.min.js' }))
   .pipe(gulp.dest('./@contents/@exported_js'));
 }
 
-function verifyMarkup() {
-  return gulp.src('./@contents/@exported_html/*')
-    .pipe(bootlint());
-}
+// function verifyMarkup() {
+//   return gulp.src('./@contents/@exported_html/*')
+//     .pipe(bootlint());
+// }
 
 function cleanCache(dirs) {
   log('\x1b[44mCleaning cache...\x1b[0m');
@@ -208,7 +209,8 @@ exports.default = () => {
 
   // Main tasks + watch
   gulp.watch('./@contents/views', { ignoreInitial: false },
-    gulp.series(() => { return cleanCache(['./@contents/_cache/*','./@contents/@exported_html/*']) }, compileAllPages, verifyMarkup)
+    // gulp.series(() => { return cleanCache(['./@contents/_cache/*','./@contents/@exported_html/*']) }, compileAllPages, verifyMarkup)
+    gulp.series(() => { return cleanCache(['./@contents/_cache/*','./@contents/@exported_html/*']) }, compileAllPages)
   );
   gulp.watch('./@contents/js', { ignoreInitial: false }, gulp.series(() => { return cleanCache('./@contents/@exported_js/*.js') }, fetchVendorAndCompileJs));
   gulp.watch('./@contents/sass', { ignoreInitial: false }, gulp.series(() => { return cleanCache('./@contents/@exported_css/*.css') }, compileCss));

@@ -1,4 +1,4 @@
-{% if content %}
+{% if faq %}
   {% if not user['auth'] %}
   <section class="bg-light bg-gradient py-4 text-center">
     <div class="container-fluid">
@@ -10,5 +10,5 @@
     </div>
   </section>
   {% endif %}
-  {{ contentText }}
+  {{ faq }}
 {% endif %}

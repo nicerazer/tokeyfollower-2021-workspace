@@ -1,0 +1,110 @@
+<div class="w-100 position-relative">
+  <div class="h-100 w-100 position-absolute overflow-hidden">
+    <img src="https://cdn.mypanel.link/af5a5a/g8e0q5syxhpd43wq.png" alt="" width="400px" style="position:absolute;">
+    <svg width="400" height="400" style="position:absolute; bottom: 0; right: 0;">
+      <rect width="400" height="400" fill="#AFD9FF" />
+    </svg>
+  </div>
+
+  <div class="d-flex align-items-center container h-100 py-3 py-md-5"><div class="card border-0 shadow-lg py-3 py-sm-5 p-sm-5 overflow-hidden"><div class="card-body">
+    <div class="row row-cols-1 row-cols-lg-2">
+      <div class="col">
+        <div class="d-flex mb-4">
+          <a href="/">
+            <img src="https://cdn.mypanel.link/af5a5a/5poolxxjg4ox7pog.png" alt="Logo TokeyFollower" class="img-fluid float-center">
+          </a>
+        </div>
+        <div id="signup-illustrate" class="h-100" style="z-index:-1;">
+          <img src="https://cdn.mypanel.link/af5a5a/x4x7qqse95z006bo.jpg" alt="Holding a phone">
+          <div>
+            <span class="elements-popping"><img src="https://cdn.mypanel.link/af5a5a/0tqzl6oq0dsqeo33.jpg" alt="Comment"></span>
+            <span class="elements-popping"><img src="https://cdn.mypanel.link/af5a5a/9gqznfqwztfxrpp3.jpg" alt="Like"></span>
+            <span class="elements-popping"><img src="https://cdn.mypanel.link/af5a5a/9gqznfqwztfxrpp3.jpg" alt="Like"></span>
+            <span class="elements-popping"><img src="https://cdn.mypanel.link/af5a5a/0tqzl6oq0dsqeo33.jpg" alt="Comment"></span>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="z-index:0;">
+        <h2 class="fw-bolder">Mulakan pengalaman anda di TokeyFollower hari ini!</h2>
+        <p class="text-muted">Servis yang murah. Sistem yang mudah. Server yang pantas. Bina sales dengan servis kami. Sudah ada akaun? <a href="{{ page_url('signin') }}" class="text-decoration-none">Log Masuk</a></span></p>
+        <form action="" method="post">
+  
+          {% if error %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <i class="bi bi-check-circle-fill flex-shrink-0 me-1"></i>
+              {{ errorMessage }}
+            </div>
+          {% endif %}
+          {% if success %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <i class="bi bi-check-circle-fill flex-shrink-0 me-1"></i>
+              {{ successText }}
+            </div>
+          {% endif %}
+
+          <div class="mb-3">
+            <label for="username" class="form-label"><em>Username</em></label>
+            <input type="text" class="form-control" id="username" value="{{ data['login'] }}" name="RegistrationForm[login]">
+          </div>
+  
+          <div class="row row-cols-1 row-cols-sm-2">
+          {% if name_fields %}
+            <div class="col mb-3">
+              <label for="firstname" class="form-label"><em>First Name</em></label>
+              <input type="text" class="form-control" id="firstname" value="{{ data['first_name'] }}" name="RegistrationForm[first_name]">
+            </div>
+  
+            <div class="col mb-3">
+              <label for="lastname" class="form-label"><em>Last Name</em></label>
+              <input type="text" class="form-control" id="lastname" value="{{ data['last_name'] }}" name="RegistrationForm[last_name]">
+            </div>
+          {% endif %}
+          </div>
+  
+  
+          <div class="mb-3">
+            <label for="email" class="form-label">Emel</label>
+            <input type="email" class="form-control" id="email" value="{{ data['email'] }}" name="RegistrationForm[email]">
+          </div>
+  
+          {% if skype_field %}
+            <div class="mb-3">
+              <label for="skype" class="form-label">Skype</label>
+              <input type="text" class="form-control" id="skype" value="{{ data['skype'] }}" name="RegistrationForm[skype]">
+            </div>
+          {% endif %}
+  
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-1 row-cols-xl-2">
+            <div class="col mb-3">
+              <label for="password" class="form-label">Kata Laluan</label>
+              <input type="password" class="form-control" id="password" name="RegistrationForm[password]">
+            </div>
+  
+            <div class="col mb-3">
+              <label for="confirm" class="form-label">Kata Laluan <em>(Confirmation)</em></label>
+              <input type="password" class="form-control" id="confirm" name="RegistrationForm[password_again]">
+            </div>
+          </div>
+  
+          {% if site['captcha'] %}
+            {{ captchaCode }}
+          {% endif %}
+  
+          {% if check_agreement %}
+            <div class="mb-3">
+              <div class="checkbox">
+                <label class="text-muted">
+                  <input type="checkbox" class="terms-accept-checkbox" name="RegistrationForm[termsofservice]"> {{ lang('signup.accept_terms_text') }} <a href="{{ page_url('terms') }}" target="_blank">{{ lang('terms.terms_of_service') }}</a>
+                </label>
+              </div>
+            </div>
+          {% endif %}
+  
+          <input type="hidden" name="_csrf" value="{{csrftoken}}">
+          <button type="submit" class="btn btn-primary">Daftar</button>
+  
+        </form>
+      </div>
+    </div>
+  </div></div></div>
+</div>

@@ -81,35 +81,39 @@
     
         </div>
         <div class="col-12">
-          <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-0 g-lg-3">
+          <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-2 g-lg-3">
             <div class="col">
-              <div class="card mb-2 mb-lg-1 mb-xl-3 bg-primary">
+              <div class="h-100 card mb-2 mb-lg-1 mb-xl-3 bg-primary"
+                data-bs-toggle="tooltip" data-bs-placement="top" title="{{ user['balance'] }}"
+              >
                 <div class="card-body text-light d-flex align-items-center">
                   <span class="ms-2 me-4">
                     <i class="bi bi-wallet2"></i>
                   </span>
                   <span class="d-flex flex-column">
                     <div class="fw-light">Baki Akaun</div>
-                    <div class="fw-bold fs-4">{{ user['balance'] }}</div>
+                    <div class="fw-bold fs-4">RM{{ (user['balance'][2:] < 1000) ? user['balance'][2:]|number_format(2, '.', ',') : user['balance'][2:]|number_format(0) }}</div>
                   </span>
                 </div>
               </div>
             </div>
             <div class="col">
-              <div class="card mb-2 mb-lg-1 mb-xl-3 bg-primary">
+              <div class="h-100 card mb-2 mb-lg-1 mb-xl-3 bg-primary"
+                data-bs-toggle="tooltip" data-bs-placement="top" title="RM{{ user['spent'] }}"
+              >
                 <div class="card-body text-light d-flex align-items-center">
                   <span class="ms-2 me-4">
                     <i class="bi bi-receipt"></i>
                   </span>
                   <span class="d-flex flex-column">
-                    <div class="fw-light">Jumlah Dihabiskan</div>
-                    <div class="fw-bold fs-4">RM{{ user['spent'] }}</div>
+                    <div class="fw-light">Perbelanjaan</div>
+                    <div class="fw-bold fs-4">RM{{ (user['spent'] < 1000) ? user['spent']|number_format(2) : user['spent']|number_format() }}</div>
                   </span>
                 </div>
               </div>
             </div>
-            <div class="col">
-              <div class="card mb-2 mb-lg-1 mb-xl-3 bg-primary">
+            <div class="col col-lg-12">
+              <div class="h-100 card mb-2 mb-lg-1 mb-xl-3 bg-primary">
                 <div class="card-body text-light d-flex align-items-center">
                   <span class="ms-2 me-4">
                     <i class="bi bi-bell"></i>
@@ -168,7 +172,7 @@
         {%endif%}
 
         <input type="hidden" name="_csrf" value="{{ csrftoken }}">
-        <button type="submit" class="btn btn-primary btn-lg">{{ lang('neworder.button') }}&nbsp;&nbsp;<i class="bi bi-credit-card"></i></button>
+        <button type="submit" class="btn btn-primary btn-lg">Hantar&nbsp;&nbsp;<i class="bi bi-credit-card"></i></button>
       </form>
     </div>
 

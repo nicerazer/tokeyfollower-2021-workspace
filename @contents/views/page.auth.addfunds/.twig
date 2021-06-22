@@ -12,9 +12,9 @@
     </div>
   </div>
 
-  <div class="row g-2 g-md-4">
+  <div class="row g-2 g-md-4 mb-3">
     <div class="col-12 col-md-4">
-      <div class="card mb-3 bg-light border-0 shadow">
+      <div class="card mb-3 bg-light border-0 shadow h-100">
         <div class="card-body text-dark d-flex align-items-center px-4 py-5 py-lg-3">
           <span class="text-center text-lg-start d-flex flex-column w-100">
             <div>
@@ -30,41 +30,42 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-8">
-      <div class="row row-cols-1 row-cols-lg-3 g-0 g-lg-3">
-        <div class="col">
-          <div class="card mb-3 bg-primary">
+    <div class="col-12 col-md-8 mt-4">
+      <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-0 g-lg-2 g-xl-3 h-100 m-0">
+        <div class="col m-0 mb-3 mb-lg-2 mb-xl-0 ps-lg-0">
+          <div class="card bg-primary h-100"
+            data-bs-toggle="tooltip" data-bs-placement="top" title="{{ user['balance'] }}"
+          >
             <div class="card-body text-light d-flex align-items-center">
               <span class="ms-2 me-4">
                 <i class="bi bi-wallet2"></i>
               </span>
               <span class="d-flex flex-column">
                 <div class="fw-light">Baki Akaun</div>
-                <div
-                  class="fw-bold fs-4"
-                  data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on left"
-                >
-                  {{ user['balance'] }}RM 1
+                <div class="fw-bold fs-4">
+                  RM{{ (user['balance'][2:] < 1000) ? user['balance'][2:]|number_format(2, '.', ',') : user['balance'][2:]|number_format(0) }}
                 </div>
               </span>
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="card mb-3 bg-primary">
+        <div class="col m-0 mb-3 mb-lg-2 mb-xl-0 pe-lg-0">
+          <div class="card bg-primary h-100"
+            data-bs-toggle="tooltip" data-bs-placement="top" title="RM{{ user['spent'] }}"
+          >
             <div class="card-body text-light d-flex align-items-center">
               <span class="ms-2 me-4">
                 <i class="bi bi-receipt"></i>
               </span>
               <span class="d-flex flex-column">
-                <div class="fw-light">Jumlah Dihabiskan</div>
-                <div class="fw-bold fs-4">RM{{ user['spent'] }}</div>
+                <div class="fw-light">Perbelanjaan</div>
+                <div class="fw-bold fs-4">RM{{ (user['spent'] < 1000) ? user['spent']|number_format(2) : user['spent']|number_format() }}</div>
               </span>
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="card mb-3 bg-primary">
+        <div class="col col-lg-12 m-0 pe-lg-0 ps-lg-0 ps-xl-3">
+          <div class="card bg-primary h-100">
             <div class="card-body text-light d-flex align-items-center">
               <span class="ms-2 me-4">
                 <i class="bi bi-bell"></i>
@@ -128,7 +129,7 @@
 
     <input type="hidden" name="_csrf" value="{{ csrftoken }}">
     <div class="mb-3">
-      <button type="submit" class="btn btn-primary btn-lg">{{ lang('addfunds.button') }}&nbsp;&nbsp;<i class="bi bi-credit-card"></i></button>
+      <button type="submit" class="btn btn-primary btn-lg">Hantar&nbsp;&nbsp;<i class="bi bi-credit-card"></i></button>
     </div>
 
   </form>
@@ -213,7 +214,7 @@
 <div class="bg-light-tinted py-4">
   <div class="container-md">  
     {% if addfunds %}
-    {{ addfundsText }}
+    {{ addfunds }}
     {% endif %}
   </div>
 </div>

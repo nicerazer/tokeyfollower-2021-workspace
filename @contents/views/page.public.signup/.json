@@ -1,0 +1,9 @@
+{
+  "status" : "all",
+  "name_fields" : true,
+  "check_agreement" : true,
+  "user": {
+    "auth": false
+  },
+  "content": true
+}
