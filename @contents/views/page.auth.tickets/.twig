@@ -1,67 +1,87 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <div class="well">
-        <form {% if site['rtl'] %}class="rtl-form"{% endif %} method="post" action="" id="ticketsend">
-            <div class="alert alert-dismissible alert-danger ticket-danger {% if site['rtl'] %} rtl-alert {% endif %}" style="display: none">
-              <button type="button" class="close">&times;</button>
-              <div></div>
-            </div>
-          <div class="form-group">
-            <label for="subject" class="control-label">{{ lang('tickets.subject') }}</label>
-            <input type="text" class="form-control" id="subject" name="TicketForm[subject]">
-          </div>
-          <div class="form-group">
-            <label for="message" class="control-label">{{ lang('tickets.message') }}</label>
-            <textarea class="form-control" rows="7" id="message" name="TicketForm[message]"></textarea>
-          </div>
-          <input type="hidden" name="_csrf" value="{{csrftoken}}">
-          <button type="submit" class="btn btn-primary">{{ lang('tickets.button') }}</button>
-        </form>
+<div class="container py-5">
+
+  <div class="row align-items-center mb-0 mb-xsm-2">
+    <div class="col-12 col-sm-4">
+      <div class="mb-0 mb-xsm-2">
+        <h1 class="mb-1 text-muted">
+          <i class="bi bi-chat-right-text d-inline-block" style="transform: translateY(3.5px);"></i>
+          <span>Mesej Admin</span>
+          </h1>
+        <h6 class="text-primary d-none d-sm-block">@TokeyFollower</h6>
       </div>
+    </div>
+    <hr class="d-block d-sm-none">
+    <div class="col-12 col-sm-6 border-start d-none d-xsm-block">
+      <span class="lead fs-6 d-inline-block d-md-none"> Ada masalah dengan sistem? Buka tiket bagi masalah anda di bawah dan kami akan bantu.</span>
+      <span class="lead fs-5 d-none d-md-inline-block"> Ada masalah dengan sistem? Buka tiket bagi masalah anda di bawah dan kami akan bantu.</span>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row mb-5">
+    <div class="col-lg-7">
+
+      <form method="post" action="" id="ticketsend">
+        <div class="alert alert-dismissible alert-danger ticket-danger" style="display: none">
+          <button type="button" class="close">&times;</button>
+          <div></div>
+        </div>
+        <div class="form-group">
+          <label for="subject" class="control-label">Subjek</label>
+          <input type="text" class="form-control" id="subject" name="TicketForm[subject]">
+        </div>
+        <div class="form-group">
+          <label for="message" class="control-label">Mesej anda (Bahasa Melayu)</label>
+          <textarea class="form-control" rows="7" id="message" name="TicketForm[message]"></textarea>
+        </div>
+        <input type="hidden" name="_csrf" value="{{csrftoken}}">
+        <button type="submit" class="btn btn-primary">Hantar</button>
+      </form>
+
+      <hr>
+
       {% if ticketList or search %}
-        <div class="row">
-          <div class="col-md-4 {% if site['rtl'] == '0' %} col-md-offset-8 {% endif %}">
-            <div class="nav-pills {% if site['rtl'] %} rtl-search {% endif %}">
-              <form action="{{ page['url'] }}" method="get" id="history-search">
-                <div class="input-group">
-                  <input type="text" class="form-control" value="{{ search }}" name="search" placeholder="{{ lang('general.search.placeholder') }}">
-                  <span class="input-group-btn">
-                   <button type="submit" class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </span>
-                </div>
-              </form>
-            </div>
+        <div class="row justify-content-end mb-3">
+          <div class="col-lg-6 col-xl-5">
+            <form action="{{ page['url'] }}" method="get" id="history-search">
+              <div class="input-group">
+                <input type="text" class="form-control" value="{{ search }}" name="search" placeholder="Cari subjek">
+                <button type="submit" class="btn btn-primary btn-default"><i class="bi bi-search" aria-hidden="true"></i></button>
+              </div>
+            </form>
           </div>
         </div>
       {% endif %}
       {% if ticketList %}
-        <div class="well">
-          <table class="table {% if site['rtl'] %} rtl-table {% endif %}">
-            <thead>
-            <tr>
-              <th>{{ lang(tickets.id) }}</th>
-              <th>{{ lang('tickets.subject') }}</th>
-              <th>{{ lang('tickets.status') }}</th>
-              <th class="nowrap">{{ lang('tickets.updated') }}</th>
-            </tr>
+      <div class="card shadow border-0 rounded-5 overflow-hidden mb-5">
+        <div class="table-responsive">
+          <table class="table table-hover m-0">
+            <thead class="table-primary">
+              <tr>
+                <th class="px-3 ">No</th>
+                <th class="px-3 ">Subjek</th>
+                <th class="px-3 text-end">Status</th>
+                <th class="px-3 text-end">Tarikh Kemaskini</th>
+              </tr>
             </thead>
             <tbody>
             {% for ticket in ticketList %}
               <tr>
-                <td>{{ ticket['id'] }}</td>
+                <td class="p-0"><a class="btn px-3 text-start w-100" href="{{ page_url('viewticket') }}/{{ ticket['id'] }}">{{ ticket['id'] }}</a></td>
                 {% if ticket['new'] == 1 %}
-                  <td><a href="{{ page_url('viewticket') }}/{{ ticket['id'] }}"><strong>{{ ticket['theme'] }}</strong></a></td>
+                  <td class="p-0"><a class="btn px-3 text-start w-100" href="{{ page_url('viewticket') }}/{{ ticket['id'] }}"><strong>{{ ticket['theme'] }}</strong></a></td>
                 {% else %}
-                  <td><a href="{{ page_url('viewticket') }}/{{ ticket['id'] }}">{{ticket['theme']}}</a></td>
+                  <td class="p-0"><a class="btn px-3 text-start w-100" href="{{ page_url('viewticket') }}/{{ ticket['id'] }}">{{ticket['theme']}}</a></td>
                 {% endif %}
-                <td>{{ ticket['status'] }}</td>
-                <td><span class="nowrap">{{ ticket['time'] }}</span></td>
+                <td class="p-0"><a class="btn px-3 text-end w-100" href="{{ page_url('viewticket') }}/{{ ticket['id'] }}">{{ ticket['status'] }}</td>
+                <td class="p-0"><a class="btn px-3 text-end w-100" href="{{ page_url('viewticket') }}/{{ ticket['id'] }}"><span class="nowrap">{{ ticket['time'] }}</span></td>
               </tr>
             {% endfor %}
             </tbody>
           </table>
         </div>
+      </div>
       {% endif %}
       {% if pagination['count'] > 50 %}
         <div class="nav-pills">
@@ -105,16 +125,72 @@
         </div>
       {% endif %}
     </div>
-  </div>
-</div>
-{% if ticketsText %}
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <div class="well {% if site['rtl'] %} rtl-content {% endif %}">
-          {{ ticketsText }}
+    <div class="col-lg-5">
+
+      <div class="card mb-3 bg-primary-lighter">
+        <div class="card-body">
+          <p><span class="lead">Sila gunakan code tersebut di ruang</span> <strong class="fw-bolder fs-5">SUBJEK</strong> <span class="lead">untuk memudahkan urusan</span></p>
+
+              
+          <p><span class="badge bg-primary mb-2">Payment Delay</span><br>Untuk duit yg dimasukkan tidak naik secara automatik</p>
+          <p><span class="badge bg-primary mb-2">Refill</span><br>Refill order anda</p>
+          <p><span class="badge bg-primary mb-2">Boost</span><br>Untuk lajukan order anda</p>
+
+          <small><em>* sila masukkan number order anda terus ye</em></small>
+        </div>
+      </div>
+
+      <div class="card mb-3 bg-primary-lighter">
+        <div class="card-body">
+          <i class="bi bi-info-circle-fill"></i> Order akan mengambil masa sehingga <span class="fw-bold">24 jam</span> untuk proses, seperti dinyatakan dalam <em>description</em> order.<br><br>Sila tunggu sebelum buat aduan.
+        </div>
+      </div>
+
+      <div class="card mb-3 text-white bg-danger ">
+        <div class="fs-5 fw-bold card-header lead text-uppercase text-center">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink">
+              <i class="bi bi-exclamation-triangle"></i>
+            </div>
+            <div class="text-justify">
+              Telegram adalah tempat dilarang anda hantar aduan
+            </div>
+            <div class="flex-shrink">
+              <i class="bi bi-exclamation-triangle"></i>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <span class="fw-light">Telegram hanyalah untuk belajar servis di TokeyFollower. Sila gunakan page ini untuk memudahkan urusan.</span>
+        </div>
+      </div>
+      <div
+        class="card overflow-hidden border-0"
+        style="background:linear-gradient(105.26deg, #97FFBE 11.24%, #DFFFC6 92.22%); box-shadow: 0px 4px 21px -5px rgba(0, 0, 0, 0.25);">
+        <div class="card-body p-5">
+          <div class="position-absolute text-white" style="right: -50px; bottom: -50px; z-index: 0; opacity: .5;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="350" height="350" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
+              <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+            </svg>
+          </div>
+
+          <div class="position-relative">
+            <p class="lead" style="color: #476944;">
+              Mesej admin kami di Whatsapp<br>
+              Dari pukul <strong>9 pagi</strong> - <strong>5 petang</strong>
+            </p>
+            <p class="fw-bold fs-4" style="color: #2a3d28;">01234213123</p><br>
+          </div>
+          <a href="http://wasap.my/60189133685" target="_blank" class="float-end btn btn-lg text-light position-relative" style="background-color:#2FC23E;"><span class="lead">Buka Whatsapp</span> <i class="bi bi-whatsapp"></i></a>
         </div>
       </div>
     </div>
   </div>
-{% endif %}
+
+  <hr>
+
+  {% if ticketsText %}
+  {{ ticketsText }}
+  {% endif %}
+
+</div>
