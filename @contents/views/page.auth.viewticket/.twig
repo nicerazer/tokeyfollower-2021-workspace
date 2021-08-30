@@ -1,56 +1,107 @@
-<div class="titcket-title">{{ ticket['thema'] }}</div>
-{% if messageList %}
-  {% for message in messageList %}
-    {% if message['support'] == 0 %}
-      <div class="row ticket-message-block ticket-message-right bg-danger">
-        <div class="col-md-1"></div>
-        <div class="col-md-11">
-          <div class="ticket-message">
-            <div class="message">{{ message['message'] }}</div>
-          </div>
-          <div class="info text-right">
-            <strong>{{ message['author'] }}</strong>
-            <small class="text-muted">{{ message['time'] }}</small>
-          </div>
-        </div>
-        <div class="col-md-1"></div>
-      </div>
-    {% else %}
-      <div class="row ticket-message-block ticket-message-left">
-        <div class="col-md-11">
-          <div class="ticket-message">
-            <div class="message">{{ message['message'] }}</div>
-          </div>
-          <div class="info">
-            <strong>{{ message['author'] }}</strong>
-            <small class="text-muted">{{ message['time'] }}</small>
-          </div>
-        </div>
-        <div class="col-md-1"></div>
-      </div>
-    {% endif %}
-  {% endfor %}
-{% endif %}
-{% if canAddMessage %}
-  <div class="row">
-    <div class="col-md-12">
-      <form {% if site['rtl'] %} class="rtl-form"{% endif %} method="post" action="">
-        {% if error %}
-          <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
+<div class="py-md-5 container-fluid">
+  <div class="row justify-content-center vh-100">
+    <div class="col-sm-12 col-md-9 col-lg-8 h-100">
+      <div class="card h-100 border-0 shadow-lg">
+
+        <div class="card-header px-5 py-4 bg-white position-relative">
+
+          {% if error %}
+            <div class="alert alert-warning alert-dismissible fade show position-absolute" style="left: 20px; top: 100px; z-index: 2; width: calc(100% - 40px); opacity: .9;" role="alert">
               {{ errorMessage }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endif %}
+
+          <a href="/tickets" class="text-decoration-none btn btn-outline-dark border-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left me-3" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+            Kembali
+          </a>
+        </div>
+
+        {% if messageList %}
+
+          <div id="viewticket-message-window" class="card-body overflow-auto position-relative" style="background: url(https://cdn.mypanel.link/af5a5a/x8l6xnoyqqopbulj.png); background-repeat: repeat-y; background-size: cover;">
+            <div class="p-lg-5 p-md-4">
+              <ul class="list-unstyled">
+
+                {% set isFirstLoop = true %}
+                {% set currentDate = date(messageList[0]['time'])|date("j F Y") %}
+                {% set isCurrentMessageSupport = messageList[0]['support'] %}
+                {% for message in messageList %}
+                  {% if not isFirstLoop and (isCurrentMessageSupport != message['support'] or currentDate != date(message['time'])|date("j F Y")) %}
+                  <li class="py-3"></li>
+                  {% endif %}
+                  <li class="mb-3 {% if message['support'] == 0 %}ps-md-5 ms-5 {% else %}pe-md-5 me-5{% endif %}">
+                    <div class="d-flex flex-column {% if message['support'] == 0 %}ms-sm-5 ps-sm-5 justify-content-end {% else %}me-sm-5 pe-sm-5 justify-content-start{% endif %}">
+
+                      {% if isFirstLoop or isCurrentMessageSupport != message['support'] or currentDate != date(message['time'])|date("j F Y") %}
+                        {% set isCurrentMessageSupport = message['support'] %}
+                        {% set isFirstLoop = false %}
+                        {% set currentDate = date(message['time'])|date("j F Y") %}
+                        <div class="mb-2">
+                          <div class="align-items-base {% if message['support'] == 0 %}float-end {% else %} float-start{% endif %}">
+                            <span class="fs-6 me-1 lead align-middle">{{ date(message['time'])|date("j F Y") }}</span>
+
+                            {% if message['support'] == 0 %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 1.37A7 7 0 0 0 8 1z"/>
+                            </svg>
+                            {% else %}
+                            <img src="https://cdn.mypanel.link/af5a5a/q7l42zq35bnzb3r9.jpg" alt="" width="16" height="16" >
+                            {% endif %}
+                            
+                          </div>
+                        </div>
+                      {% endif %}   
+
+                      <div class="d-flex {% if message['support'] == 0 %}justify-content-end {% else %} justify-content-start{% endif %}">
+                        <div class="card {% if message['support'] == 0 %}bg-primary text-light {% else %}bg-light {% endif %}border-0" style="min-width:80px; box-shadow: -4px 4px 0px rgba(0, 0, 0, 0.5);">
+                          <div class="card-body d-flex flex-column align-items-end">
+                            <span>{{ message['message'] }}</span>
+                            <small class="fw-light {% if message['support'] == 0 %}text-light {% else %}text-muted{% endif %}">{{ date(message['time'])|date("g:i A") }}</small>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </li>
+
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+
+        {% else %}
+          <div class="card-body d-flex align-items-center justify-content-center" style="height: 200px;">
+            <p>Chat is empty...</p>
           </div>
         {% endif %}
-        <div class="form-group panel-border-top">
-          <label for="message" class="control-label">{{ lang('tickets.message') }}</label>
-          <textarea id="message" rows="5" class="form-control" name="TicketMessageForm[message]"></textarea>
+
+        <div class="card-footer p-0">
+          <div class="input-group">
+            <form method="post" action="" class="d-flex w-100">
+              <textarea id="message" name="TicketMessageForm[message]" type="text" class="form-control" placeholder="Isi mesej anda..." style="min-height: 60px; max-height: 60px; resize: none;" {% if not canAddMessage %} disabled {% endif %}></textarea>
+              <input class="d-none" type="hidden" name="_csrf" value="{{csrftoken}}">
+              <button class="btn btn-primary btn-lg" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 20 20" style="transform:translateY(-2px) translateX(1px) rotate(90deg);" fill="currentColor">
+                  <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                </svg>
+              </button>
+            </form>
+          </div>
         </div>
-        <input type="hidden" name="_csrf" value="{{csrftoken}}">
-        <button type="submit" class="btn btn-primary">{{ lang('tickets.button.reply') }}</button>
-      </form>
+      </div>
     </div>
   </div>
-{% endif %}
+</div>
 
-Check here
-
+<script>
+function toBottom()
+{
+    document.getElementById("viewticket-message-window").scrollTo({top:document.getElementById("viewticket-message-window").scrollHeight, behavior:'smooth'});
+}
+window.onload=toBottom;
+</script>
