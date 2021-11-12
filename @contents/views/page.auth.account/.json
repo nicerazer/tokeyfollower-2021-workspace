@@ -1,0 +1,15 @@
+{
+    "user": {
+        "username": "nicerazer"
+    },
+    "site": {
+        "languages": [
+            {
+                "code": 1213,
+                "name": "Malaysia"
+            }
+        ]
+    },
+    "error": true,
+    "errorText": "Kunci API telah dijana"
+}

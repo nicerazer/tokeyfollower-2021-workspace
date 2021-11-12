@@ -1,3 +1,26 @@
+<style>
+  #addfunds-manual-mobiletransfer-image {
+    max-width: 400px;z-index: -1;transform: rotateY(180deg);
+    right: calc(20% - 12vw);
+  }
+  @media (max-width: 1199.98px) {
+    #addfunds-manual-mobiletransfer-image {
+      right: calc(17% - 16vw);
+    }
+  }
+  @media (max-width: 991.98px) {
+    #addfunds-manual-mobiletransfer-image {
+      right: calc(6% - 16vw);
+    }
+  }
+  @media (max-width: 767.98px) {
+    #addfunds-manual-mobiletransfer-image {
+      right: calc(6% - 16vw);
+      opacity: .3;
+    }
+  }
+</style>
+
 <div class="container py-4 mb-3">
 
   <h1 class="mb-3 display-5">
@@ -82,7 +105,8 @@
   </div>
 
 
-  {% if paymentsList %}
+  {#% if paymentsList %#}
+  {% if true %}
   <form method="post" action="">
     {% if success %}
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -134,6 +158,97 @@
 
   </form>
   {% endif %}
+
+  <div class="mb-3" id="addfunds-payment-manual">
+    <div class="rounded shadow p-md-6">
+      <div class="d-flex flex-column justify-content-center">
+        <div class="card">
+          <div class="p-4 p-lg-5 d-flex flex-column">
+            <h4 class="fw-bold my-4 align-self-center">Bayar di kaunter kedai runcit</h4>
+            <div class="align-self-center shadow rounded-3 p-3 my-5">
+              <ul class="nav nav-pills nav-justified mb-3 flex-sm-row flex-column" id="pills-tab" role="tablist">
+                <li class="nav-item flex-grow-1" role="presentation">
+                  <button class="nav-link w-100 active" id="pills-touchngo-tab" data-bs-toggle="pill" data-bs-target="#pills-touchngo" type="button" role="tab" aria-controls="pills-touchngo" aria-selected="true">Touch 'n' Go</button>
+                </li>
+                <li class="nav-item flex-grow-1" role="presentation">
+                  <button class="nav-link w-100" id="pills-shopeepay-tab" data-bs-toggle="pill" data-bs-target="#pills-shopeepay" type="button" role="tab" aria-controls="pills-shopeepay" aria-selected="false">ShopeePay</button>
+                </li>
+              </ul>
+              <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-touchngo" role="tabpanel" aria-labelledby="pills-touchngo-tab">
+                  <div class="w-100 d-flex flex-column align-items-center py-4 px-4 px-xl-6">
+                    <h5 class="text-muted text-center">MOHAMMAD IQBAL BIN MOHD ROZALI</h5>
+                    <img class="img-fluid my-4 my-xl-5 mx-sm-6" src="https://cdn.mypanel.link/af5a5a/tptg4tlxottoo295.jpeg" style="max-width:180px;">
+                    <h5 class="text-muted text-center">Scan menggunakan Touch 'n Go app<br>anda untuk lakukan pembayaran</h5>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="pills-shopeepay" role="tabpanel" aria-labelledby="pills-shopeepay-tab">
+                  <div class="w-100 d-flex flex-column align-items-center py-4 px-4 px-xl-6">
+                    <h5 class="text-muted text-center">MOHAMMAD IQBAL BIN MOHD ROZALI</h5>
+                    <img class="img-fluid my-4 my-xl-5 mx-sm-6" src="https://cdn.mypanel.link/af5a5a/n3zaapp185ay2f9u.jpeg" style="max-width:180px;">
+                    <h5 class="text-muted text-center">Scan menggunakan Shopeepay app<br>anda untuk lakukan pembayaran</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="my-4 mx-lg-6">
+              <p class="text-muted">
+                Walk in ke kaunter di store yang terima QR Payment, scan gambar di atas, berikutan jumlah yang mahu ditambah ke dalam akaun.
+              </p>
+              <p class="text-muted">
+                Antara store yang terima; 7-Eleven, Econsave, Watsons, X-Kiosk, Shell, Petronas, KK, Speedmart, Tesco.
+              </p>
+              <p class="text-muted">
+                Selepas pembayaran, terus klik butang wasap di bawah dan hantar resit pembayaran.
+              </p>
+              
+            </div>
+            <a href="http://Wasap.my/60189133685" target="_blank" class="my-4 btn btn-success btn-lg align-self-center px-4">Whatsapp Admin <i class="bi bi-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center position-relative py-4 py-sm-5 mx-5 mx-md-0">
+          <div class="bg-white p-2">
+            <span class="text-sm text-muted text-center">ATAU</span>
+          </div>
+          <hr class="m-0 position-absolute top-50 w-100" style="z-index: -1;">
+        </div>
+        <div class="card overflow-hidden">
+          <div class="p-4 p-lg-5" style="z-index: 1;">
+            <h4 class="fw-bold mb-5 me-md-7">Touch ‘n Go Mobile Number Transfer</h4>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="me-md-7 d-flex flex-column">
+                <p class="m-0 text-muted">Transfer ke nombor berikut menggunakan aplikasi Touch ‘n Go.</p>
+                <div class="align-self-start justify-content-evenly my-3 px-3 py-1 rounded-10 text-muted d-flex align-items-center gap-2 fs-4" style="background-color: #f8f9fa;">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24px" height="24px">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                  <span style="transform: translateY(1px);">0199947574</span>
+                </div>
+    
+                <p class="m-0 mb-5 text-muted">Kemudian klik butang whatsapp dan terus hantar resit pembayaran</p>
+                <a href="http://Wasap.my/60189133685" target="_blank" class="btn btn-success btn-lg align-self-start px-4">Whatsapp Admin <i class="bi bi-whatsapp"></i></a>
+              </div>
+              <img id="addfunds-manual-mobiletransfer-image" src="https://cdn.mypanel.link/af5a5a/fhk9a3e12ka3btsh.png" alt="" class="img-fluid position-absolute">
+            </div>
+            <div class="position-absolute w-100 h-100 top-0 start-0"
+              style="
+                z-index: -1;
+                background: hsla(0, 0%, 98%, 1);
+
+                background: linear-gradient(0deg, hsla(0, 0%, 98%, 1) 0%, hsla(0, 0%, 100%, 0) 100%);
+                
+                background: -moz-linear-gradient(0deg, hsla(0, 0%, 98%, 1) 0%, hsla(0, 0%, 100%, 0) 100%);
+                
+                background: -webkit-linear-gradient(0deg, hsla(0, 0%, 98%, 1) 0%, hsla(0, 0%, 100%, 0) 100%);
+                
+                filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FBFBFB", endColorstr="#FFFFFF", GradientType=1 );                
+              "
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   {% if paymentList %}
 
@@ -212,9 +327,18 @@
 </div>
 
 <div class="bg-light-tinted py-4">
-  <div class="container-md">  
-    {% if addfunds %}
+  <div class="container-md">
     {{ addfunds }}
-    {% endif %}
   </div>
 </div>
+
+<script>
+  document.getElementById('method').onchange = () => { setTimeout(() => {
+    document.getElementById('amount').disabled = document.getElementById('method').value == 51863
+    if (document.getElementById('method').value == 51863) {
+      document.getElementById('addfunds-payment-manual').classList.remove('d-none')
+    } else {
+      document.getElementById('addfunds-payment-manual').classList.add('d-none')
+    }
+ }, 5 ) }
+</script>
