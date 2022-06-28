@@ -6,6 +6,5 @@
   },
   "check_agreement": true,
   "error": false,
-  "errorMessage": "Error in processing stuff! Please Try Again",
-  "newOrderText": true
+  "errorMessage": "Error in processing stuff! Please Try Again"
 }

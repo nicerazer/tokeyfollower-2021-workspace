@@ -10,11 +10,165 @@
     width: 350px;
   }
 
+  #tf--signin-hero-merdeka {
+    background: linear-gradient(92.22deg, #0088E2 -16.46%, #77C6F2 91.03%, #F0FFD8 156.09%), #FFFFFF;
+  }
+
+  #tf--signin-hero-merdeka img {
+    transform: translateY(calc(-4rem)) translateX(calc(25rem - 50vw)) scale(.25);
+  }
+  #tf--signin-splash-merdeka {
+    padding-top: 4rem; padding-bottom: 4rem;
+  }
+
+  #seasonal-signin-illustration-splash-fireworks {
+    top: 60%; right: 10%;
+    width: 50% !important;
+  }
+
+  #seasonal-signin-illustration-splash {
+    position: relative;
+    width: 100%;
+  }
+  
+  #seasonal-signin-illustration-splash img {
+    position: absolute;
+    width: 100%;
+  }
+
+  #seasonal-signin-illustration-splash #seasonal-signin-illustration-splash-flag {
+    width: 30%;
+    right: 0;
+    transform: translateX(-17%) translateY(80%);
+  }
+  #seasonal-signin-illustration-splash .seasonal-signin-illustration-splash-sprite {
+    width: 14%;
+  }
+  #seasonal-signin-illustration-splash #seasonal-signin-illustration-splash-sprite-1 {
+    animation: merdeka-moving-cloud-1 25s infinite linear;
+    transform: translateY(12rem);
+  }
+  #seasonal-signin-illustration-splash #seasonal-signin-illustration-splash-sprite-2 {
+    animation: merdeka-moving-cloud-2 15s infinite linear;
+    transform: translateY(20rem);
+    transform: translateY(900%);
+  }
+  #seasonal-signin-illustration-splash #seasonal-signin-illustration-splash-sprite-3 {
+    animation: merdeka-moving-cloud-3 15s infinite linear;
+    transform: translateY(250%);
+  }
+  #seasonal-signin-illustration-splash #seasonal-signin-illustration-splash-sprite-4 {
+    animation: merdeka-moving-cloud-4 25s infinite linear;
+    transform: translateY(16rem) translateX(14rem);
+    transform: translateY(16rem) translateX(8rem);
+    transform: translateY(500%) translateX(180%);
+    transform: translateY(500%) translateX(100%);
+  }
+  
+  @keyframes merdeka-moving-cloud-1 {
+    0% {
+      opacity: 1;
+      transform: translateY(12rem) translateX(15rem);
+      transform: translateY(400%) translateX(175%);
+    }
+    50% {
+      opacity: 0;
+      transform: translateY(12rem) translateX(30rem);
+      transform: translateY(400%) translateX(400%);
+    }
+    51% {
+      opacity: 0;
+      transform: translateY(12rem) translateX(0rem);
+      transform: translateY(400%) translateX(50%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(12rem) translateX(15rem);
+      transform: translateY(400%) translateX(175%);
+    }
+  }
+  @keyframes merdeka-moving-cloud-2 {
+    0% {
+      opacity: 0;
+    }
+    15% {
+      opacity: 1;
+    }
+    85% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(20rem) translateX(30rem);
+      transform: translateY(900%) translateX(400%);
+    }
+  }
+  @keyframes merdeka-moving-cloud-3 {
+    0% {
+      opacity: 1;
+      transform: translateY(6rem) translateX(25rem);
+      transform: translateY(250%) translateX(295%);
+    }
+    25% {
+      opacity: 0;
+      transform: translateY(6rem) translateX(30rem);
+      transform: translateY(250%) translateX(350%);
+    }
+    26% {
+      opacity: 0;
+      transform: translateY(6rem) translateX(10rem);
+      transform: translateY(250%) translateX(130%);
+    }
+    75% {
+      opacity: 1;
+      transform: translateY(6rem) translateX(20rem);
+      transform: translateY(250%) translateX(240%);
+    }
+    100% {
+      transform: translateY(6rem) translateX(25rem);
+      transform: translateY(250%) translateX(295%);
+    }
+  }
+  @keyframes merdeka-moving-cloud-4 {
+    0% {
+      opacity: 1;
+      transform: translateY(16rem) translateX(9.5rem);
+      transform: translateY(500%) translateX(120%);
+    }
+    25% {
+      opacity: 1;
+      transform: translateY(16rem) translateX(11rem);
+      transform: translateY(500%) translateX(140%);
+    }
+    75% {
+      opacity: 0;
+      transform: translateY(16rem) translateX(14rem);
+      transform: translateY(500%) translateX(180%);
+    }
+    76% {
+      opacity: 0;
+      transform: translateY(16rem) translateX(8rem);
+      transform: translateY(500%) translateX(100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(16rem) translateX(9.5rem);
+      transform: translateY(500%) translateX(120%);
+    }
+  }
+
   @media (min-width: 576px) {
     #tf--signin-hero img {
       right: 0;
       width: 400px;
     }
+    #tf--signin-hero-merdeka img {
+      transform: translateY(calc(-4rem)) translateX(calc(23rem - 50vw)) scale(.25);
+    }
+    #tf--signin-splash-merdeka-title {
+      min-width: 24rem;
+    }
+
   }
 
   @media (min-width: 768px) {
@@ -24,24 +178,84 @@
     #tf--signin-hero img {
       width: 450px;
     }
+    #tf--signin-hero-merdeka img {
+      transform: translateY(calc(-3rem)) translateX(calc(20rem - 50vw)) scale(.25);
+    }
+
   }
 
   @media (min-width: 992px) {
+    /*
     #tf--signin-hero {
       padding-bottom: 0;
     }
     #tf--signin-hero img {
       width: 600px;
+    }*/
+    #tf--signin-hero-merdeka img {
+      transform: translateY(.75rem) translateX(5rem) scale(.75);
     }
+    #tf--signin-splash-merdeka {
+      padding-top: 6rem; padding-bottom: 6rem;
+    }
+    #tf--signin-splash-merdeka #tf--signin-splash-merdeka-illustration {      
+      padding:2rem;
+    }  
+  
   }
+
+  @media (min-width: 1200px) {
+    #tf--signin-hero-merdeka img {
+      transform: translateY(.75rem) translateX(-4rem) scale(.75);
+    }
+    #tf--signin-splash-merdeka {
+      padding-top: 4rem; padding-bottom: 8rem;
+    }
+    #tf--signin-splash-merdeka #tf--signin-splash-merdeka-illustration {      
+      padding:4rem;
+    }  
+  
+  }
+
 
 </style>
 
-<section class="text-center py-5 container-fluid bg-primary-darker bg-gradient">
+<!-- <section class="text-center py-5 container-fluid bg-primary-darker bg-gradient">
   <h1 class="h1 fw-bolder ff-rubik"><span class="text-primary">Tokey</span><span class="text-secondary">Follower</span></h1>
   <p class="text-light">Pengalaman menggunakan servis follower yang terbaik anda akan alami!</p>
+</section> -->
+
+<section id="tf--signin-hero-merdeka" class="py-5 position-relative">
+  <div class="py-5 container d-flex align-items-center justify-content-between">
+    <div style="z-index: 10;">
+      
+      <div class="mb-3">
+        <h1 class="h1 fw-bolder ff-rubik"><span class="text-white">Tokey</span><span class="text-secondary">Follower</span></h1>
+        <p class="text-light">Pengalaman menggunakan servis follower yang terbaik anda akan alami!</p>
+      </div>
+      <div class="d-flex text-light">
+          <span class="d-flex align-items-center me-5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="me-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="height: 20px; width: 20px; opacity: 0.5;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+            <span>{{ totals['usersAll'] + 567556 }} Pengguna</span>
+          </span>
+          <span class="d-flex align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="me-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="height: 20px; width: 20px; opacity: 0.5;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+            </svg>
+            <span>Server no.1 di Malaysia</span>
+          </span>
+      </div>
+    </div>
+
+    <div class="overflow-hidden position-absolute" style="right: 0; pointer-events:  none;">
+      <img src="https://cdn.mypanel.link/af5a5a/pbe2wglrp0pj0s4k.png" alt="">
+    </div>
+  </div>
 </section>
 
+<!-- 
 <section id="tf--signin-hero" class="position-relative">
   <div class="w-100 h-100 overflow-hidden position-absolute" style="z-index: -5;">
     <img src="https://cdn.mypanel.link/af5a5a/d10enccrr81uhdxc.png" alt="" class="position-absolute">
@@ -58,6 +272,38 @@
           </div>
           <a class="btn btn-primary btn-md-lg rounded-5" href="/signup"><h3 class="my-1 mx-2 my-md-2 mx-md-3 text-light fw-bold">DAFTAR <i class="bi bi-box-arrow-in-right"></i></h3></a>
         </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<section id="tf--signin-splash-merdeka" class="container px-xsm-5">
+  <div class="d-flex align-items-center flex-column flex-lg-row">
+    <div id="tf--signin-splash-merdeka-title" class="ps-xxl-6">
+      <div class="mb-4">
+        <h1 class="ff-rubik fw-bold" style="font-size: 96px;">31</h1>
+        <h3 style="color: #757575; font-size: 24px;">Ogos 1957</h3>
+      </div>
+      <p class="mb-2" style="color: #757575;">Selamat Menyambut Hari Kemerdekaan ke-64 kepada semua rakyat Malaysia!</p>
+      <svg width="53" height="5" viewBox="0 0 53 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="2.5" y1="2.5" x2="50.5" y2="2.5" stroke="#FCE4E8" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    {# <div id="tf--signin-splash-merdeka-illustration"> #}
+      {# <img class="img-fluid" src="https://cdn.mypanel.link/af5a5a/l09cjs2a1nl322pz.gif" alt=""> #}
+    {# </div> #}
+    <div>
+      <div id="seasonal-signin-illustration-splash">
+        <img src="https://cdn.mypanel.link/af5a5a/xtbnf787c5nabnae.png" alt="">
+        <img src="https://cdn.mypanel.link/af5a5a/dlyn58qjil1ipext.png" alt="" id="seasonal-signin-illustration-splash-fireworks">
+        <img src="https://cdn.mypanel.link/af5a5a/wqtpj5sxucwde6kg.png" alt="" class="seasonal-signin-illustration-splash-sprite" id="seasonal-signin-illustration-splash-sprite-1">
+        <img src="https://cdn.mypanel.link/af5a5a/qft2k93hdtujune4.gif" alt="" id="seasonal-signin-illustration-splash-flag">
+        <img src="https://cdn.mypanel.link/af5a5a/r0ufs6q8u2c8ysj7.png" alt="" class="seasonal-signin-illustration-splash-sprite" id="seasonal-signin-illustration-splash-sprite-4">
+        <img src="https://cdn.mypanel.link/af5a5a/4kyt179fdha9pk6z.png" alt="">
+        <img src="https://cdn.mypanel.link/af5a5a/06iohe6kr71lqsu0.png" alt="">
+        <img src="https://cdn.mypanel.link/af5a5a/ucux7fboi922mqr8.png" alt="" class="seasonal-signin-illustration-splash-sprite" id="seasonal-signin-illustration-splash-sprite-2">
+        <img src="https://cdn.mypanel.link/af5a5a/44zfzsacjq5jgss9.png" alt="" class="seasonal-signin-illustration-splash-sprite" id="seasonal-signin-illustration-splash-sprite-3">
+        <img src="https://cdn.mypanel.link/af5a5a/xskznns41derna28.png" alt="" style="position: relative !important;">
       </div>
     </div>
   </div>

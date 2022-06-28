@@ -93,10 +93,18 @@ function __parseTwig(sourceTwigPath, destinationPath, twigDetailsObject, renameD
 }
 
 /** Page prefix seperated by comma */
-function _innerTwigify(pageName, pagePrefix) {
+async function _innerTwigify(pageName, pagePrefix) {
+  // const placeholderName = await (async () => { return new Promise(resolve => {
+  //   try {
+  //     resolve(`{{ fs.readFileSync(./@contents/views/${pagePrefix}.${pageName}/.placeholder).toString() }}`)
+  //   } catch(error) {
+  //     resolve(`{{ ${_replaceAndCapitalizeDotsSeparator(pageName)}Text }}`)
+  //   }
+  // })})()
   const parsedJsonData = JSON.parse(fs.readFileSync(`./@contents/views/${pagePrefix}.${pageName}/.json`));
   return __embedTwig(
     `./@contents/views/${pagePrefix}.${pageName}/.twig`,
+    // placeholderName,
     `{{ ${_replaceAndCapitalizeDotsSeparator(pageName)}Text }}`,
     `./@contents/views/${pagePrefix}.${pageName}/.html`,
     { basename: pageName, prefix: `${pagePrefix}.`, suffix: '.inner.embedded', extname: '.twig' }
@@ -185,17 +193,6 @@ function cleanCache(dirs) {
   return gulp.src(dirs, {read: false})
   .pipe(cleanFiles());
 }
-
-// exports.innerT = () => {
-//   return _innerTwigify('auth.nyaa');
-// }
-
-// exports.nyaIfy = () => {
-//   return gulp.src('./@experiments/text.twig')
-//   .pipe(replace("foo", "what you are doing bro"))
-//   .pipe(twig())
-//   .pipe(gulp.dest('./@experiments'));
-// }
 
 exports.discoverPages = _discoverPages;
 
