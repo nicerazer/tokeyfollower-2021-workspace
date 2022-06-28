@@ -14,7 +14,7 @@
 
   <div class="row g-2 g-md-4 mb-3">
     <div class="col-12 col-md-4">
-      <div class="card mb-3 bg-light border-0 shadow h-100">
+      <div class="card mb-3 bg-light border-0 shadow-sm h-100">
         <div class="card-body text-dark d-flex align-items-center px-4 py-5 py-lg-3">
           <span class="text-center text-lg-start d-flex flex-column w-100">
             <div>
@@ -137,7 +137,7 @@
 
   {% if paymentList %}
 
-    <div class="table-responsive rounded-5">
+    <div class="table-responsive rounded-5 shadow">
       <table class="table table-striped">
         <thead class="table-primary">
           <tr>
@@ -151,7 +151,7 @@
           {% for payment in paymentList %}
           <tr>
             <td>{{ payment['id'] }}</td>
-            <td><span class="nowrap">{{ payment['date'] }}</span></td>
+            <td><small class="text-muted text-nowrap">{{ payment['date'] }}</small></td>
             <td>{{ payment['method'] }}</td>
             <td>
               {% if payment['original_amount'] %}

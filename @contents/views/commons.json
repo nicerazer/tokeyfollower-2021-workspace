@@ -26,13 +26,14 @@
     ],
     "scripts": [
       {"src": "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"},
+      {"src": "app.min.js"},
       {"code": "var varFromCommonsJson = 'Hi!';"}
     ],
     "average_time": true
   },
   "user": {
-    "auth": false,
-    "balance": 20,
+    "auth": true,
+    "balance": "RM20",
     "username": "IqbalZZ"
   },
   "page": {"title": "signup"},

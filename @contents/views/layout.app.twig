@@ -20,7 +20,7 @@
 <body>
 
 {% if user['auth'] %}
-<nav class="navbar navbar-dark bg-primary shadow">
+<nav id="tf--navbar" class="navbar navbar-dark bg-primary shadow">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{ page_url('index') }}">
       {% if site['logo'] %}
@@ -29,10 +29,37 @@
         {{ site['name'] }}
       {% endif %}
     </a>
+    <ul class="navbar-nav ms-2 me-auto flex-row">
+      <li class="nav-item d-none d-md-block">
+        <a class="tf--navbar-link-neworder nav-link" href="/"><i class="bi bi-cart2 d-none d-sm-inline-block"></i> Order Baru</a>
+      </li>
+      <li class="nav-item d-none d-sm-block">
+        <a class="tf--navbar-link-orders nav-link" href="/orders"><i class="bi bi-list-check d-none d-sm-inline-block"></i> Semak Order</a>
+      </li>
+      <li class="nav-item d-none d-xsm-block">
+        <a class="tf--navbar-link-addfunds nav-link" href="/addfunds"><i class="bi bi-wallet2 d-none d-sm-inline-block"></i> Top Up</a>
+      </li>
+    </ul>
+    <a href="/addfunds" class="me-3 text-white text-decoration-none">
+      <small>Baki</small>&nbsp;&nbsp;<span class="badge rounded-pill bg-warning text-dark">RM{{ user['balance'][2:]|number_format(2, '.', ',') }}</span>
+    </a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAppNavBar" aria-controls="navbarTogglerAppNavBar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div id="navbarTogglerAppNavBar" class="collapse navbar-collapse">
+      <hr class="d-block d-md-none">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex d-md-none">
+        <li class="nav-item d-block d-md-none">
+          <a class="tf--navbar-link-neworder nav-link" href="/"><i class="bi bi-cart2"></i> Order Baru</a>
+        </li>
+        <li class="nav-item d-block d-sm-none">
+          <a class="tf--navbar-link-orders nav-link" href="/orders"><i class="bi bi-list-check"></i> Semak Order</a>
+        </li>
+        <li class="nav-item d-block d-xsm-none">
+          <a class="tf--navbar-link-addfunds nav-link" href="/addfunds"><i class="bi bi-wallet2"></i> Top Up</a>
+        </li>
+      </ul>
       <hr>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         {% for menu in site['menu'] %}
@@ -75,10 +102,10 @@
     </div>
   </div>
 </nav>
-{% elseif (page['title'] == 'Sign up') %}
+{% elseif (page['title'] == 'Sign up' or page['title'] == 'View ticket') %}
 <!-- Max size clear for signup -->
 {% else %}
-<nav class="navbar navbar-tf-main navbar-expand-lg bg-light shadow">
+<nav id="tf--navbar" class="navbar navbar-tf-main navbar-expand-lg bg-light shadow">
   <div class="container">
     <a class="navbar-brand mx-sm-3 mx-lg-0" href="{{ page_url('index') }}">
       {% if site['logo'] %}
@@ -118,14 +145,14 @@
 {% endif %}
 
 <!-- Main variables *content* -->
-<div class="{% if (page['title'] == 'Sign up') %} d-flex {% endif %} min-vh-100">
+<div class="{% if (page['title'] == 'Sign up' or page['title'] == 'View ticket') %} d-flex {% endif %} min-vh-100">
   {{ content }}
 </div>
 
 {{ site['custom_footer'] }}
 
 {% if (page['title'] != 'Sign up') %}
-<footer class="bg-primary-darker">
+<footer id="tf--footer" class="bg-primary-darker">
   <div class="container py-4 py-md-5">
     <div class="row row-cols-1 row-cols-md-3">
       <div class="col my-3">
@@ -193,6 +220,24 @@
 {% endfor %}
 
 <script type="text/javascript">
+let appPageName = window.location.pathname.split("/")[1];
+if(appPageName === "viewticket") {
+  $('#tf--navbar').remove();
+  $('#tf--footer').remove();
+}
+switch (appPageName) {
+  case "":
+    $('.tf--navbar-link-neworder').addClass('active');  
+    break;
+  case "orders":
+    $('.tf--navbar-link-orders').addClass('active');  
+    break;
+  case "addfunds":
+    $('.tf--navbar-link-addfunds').addClass('active');  
+    break;
+  default:
+    break;
+}
 
 /* -----------------------
 : BOOTSTRAP MODAL FOR YOUTUBE VIDEOS' SETTINGS

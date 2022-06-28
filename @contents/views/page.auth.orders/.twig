@@ -30,14 +30,14 @@
     <span class="search mb-3">
       <form action="{{ page['url'] }}" method="get" id="history-search">
         <div class="input-group">
-          <input type="text" name="search" class="form-control" value="{{ search }}" placeholder="{{ lang('orders.search.placeholder') }}">
+          <input type="text" name="search" class="form-control" value="{{ search }}" placeholder="Isi Carian">
           <button type="submit" class="btn btn-outline-primary"><i class="bi bi-search"></i></button>
         </div>
       </form>
     </span>
   </div>
 
-  <div class="table-responsive rounded-5">
+  <div class="table-responsive rounded-5 shadow" style="max-height:500px;">
     <table class="table table-striped">
       <thead class="table-primary">
         <tr>
@@ -56,14 +56,14 @@
       <tbody>
         {% for order in orderList %}
         <tr>
-          <td>{{ order['id'] }}</td>
-          <td>{{ order['date'] }}</td>
-          <td class="width-40">{{ order['link'] }}</td>
+          <td><small class="text-muted">{{ order['id'] }}</small></td>
+          <td><small class="text-muted">{{ order['date'] }}</small></td>
+          <td class="text-break table-primary">{{ order['link'] }}</td>
           <td>{{ order['charge'] }}</td>
-          <td class="nowrap">{{ order['start_count'] }}</td>
+          <td class="text-nowrap">{{ order['start_count'] }}</td>
           <td>{{ order['quantity'] }}</td>
           <td>{{ order['service'] }}</td>
-          <td>{{ order['status'] }}</td>
+          <td class="table-primary">{{ order['status'] }}</td>
           <td>{{ order['remains'] }}</td>
           {% if task == 1 %}
           <td>
@@ -72,12 +72,12 @@
                 {{ lang('orders.refilling') }}
               {% else %}
                 {% if order['refill'] == 1 %}
-                  <a href="{{ page['url'] }}/{{ order['id'] }}/refill" class="btn btn-xs btn-primary">{{ lang('orders.button.refill') }}</a>
+                  <a href="{{ page['url'] }}/{{ order['id'] }}/refill" class="btn btn-xs btn-outline-primary">{{ lang('orders.button.refill') }}</a>
                 {% endif %}
                 {% if order['refillAvailableTime'] %}
-                  <button class="btn btn-xs btn-primary disabled" data-toggle="tooltip" data-placement="top" title="{{ order['refillAvailableTime'] }}">{{ lang('orders.button.refill') }}</button>
+                  <button class="btn btn-xs btn-outline-primary disabled" data-toggle="tooltip" data-placement="top" title="{{ order['refillAvailableTime'] }}">{{ lang('orders.button.refill') }}</button>
                 {% endif %}
-                {% if order['cancel'] == 1 %}<a href="{{ page['url'] }}/{{ order['id'] }}/cancel" class="btn btn-xs btn-default">{{ lang('orders.button.cancel') }}</a>{% endif %}
+                {% if order['cancel'] == 1 %}<a href="{{ page['url'] }}/{{ order['id'] }}/cancel" class="btn btn-xs btn-outline-secondary">{{ lang('orders.button.cancel') }}</a>{% endif %}
               {% endif %}
             </div>
           </td>
